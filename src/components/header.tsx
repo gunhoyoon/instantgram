@@ -1,69 +1,68 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React from "react";
-import { AiOutlineHome } from "react-icons/ai";
-import { AiFillHome } from "react-icons/ai";
-import { BsPlusSquare } from "react-icons/bs";
-import { BsPlusSquareFill } from "react-icons/bs";
-import { RiSearchLine } from "react-icons/ri";
-import { RiSearchFill } from "react-icons/ri";
+import React, { useState } from "react";
+
+import ColorButton from "./ui/ColorButton";
+import HomeIcon from "./ui/icons/HomeIcon";
+import SearchIcon from "./ui/icons/SearchIcon";
+import SearchFillIcon from "./ui/icons/SearchFillIcon";
+import NewIcon from "./ui/icons/NewIcon";
+import NewFillIcon from "./ui/icons/NewFillIcon";
+import HomeFillIcon from "./ui/icons/HomeFillIcon";
+
 export default function Header() {
-  // const [path, setPath] = useState("home");
-  // console.log(path, "path");
-  const pathName = usePathname();
-  console.log(pathName);
+  const [path, setPath] = useState(window.location.pathname);
+  console.log(path);
+
+  const menu = [
+    {
+      href: "/",
+      icon: <HomeIcon />,
+      clickedIcon: <HomeFillIcon />,
+    },
+    {
+      href: "/search",
+      icon: <SearchIcon />,
+      clickedIcon: <SearchFillIcon />,
+    },
+    {
+      href: "/new",
+      icon: <NewIcon />,
+      clickedIcon: <NewFillIcon />,
+    },
+  ];
   return (
-    <div className="border-b">
-      <div className="flex justify-between mx-20 mt-5 mb-5">
-        <Link
-          href={"/"}
-          // onClick={() => {
-          //   setPath("home");
-          // }}
-        >
-          <h1 className="text-4xl font-bold translate-y-[3px]">Instantgram</h1>
-        </Link>
-        <nav>
-          <ul className="flex gap-7 text-4xl items-center">
-            <li>
+    <div className="flex justify-between items-center px-6">
+      <Link
+        href={"/"}
+        onClick={() => {
+          setPath("home");
+        }}
+      >
+        <h1 className="text-3xl font-bold">Instantgram</h1>
+      </Link>
+      <nav>
+        <ul className="flex gap-4 items-center p-4 ">
+          {menu.map((item) => (
+            <li key={item.href}>
               <Link
-                href={"/"}
-                // onClick={() => {
-                //   setPath("home");
-                // }}
+                href={item.href}
+                onClick={() => {
+                  setPath(item.href);
+                }}
               >
-                {pathName === "/" ? <AiFillHome /> : <AiOutlineHome />}
+                {path === item.href ? item.clickedIcon : item.icon}
               </Link>
             </li>
-            <li>
-              <Link
-                href={"/search"}
-                // onClick={() => {
-                //   setPath("search");
-                // }}
-              >
-                {pathName === "/search" ? <RiSearchFill /> : <RiSearchLine />}
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={"/new"}
-                // onClick={() => {
-                //   setPath("new");
-                // }}
-              >
-                {pathName === "/new" ? <BsPlusSquareFill /> : <BsPlusSquare />}
-              </Link>
-            </li>
-            <li>
-              <button className="text-2xl translate-y-[-1px] border-4 border-pink-400 p-2 rounded-lg hover:bg-pink-100">
-                Sign in
-              </button>
-            </li>
-          </ul>
-        </nav>
-      </div>
+          ))}
+          <ColorButton text="Sign in" onClick={() => {}} />
+        </ul>
+      </nav>
     </div>
   );
 }
+
+// icon이 변경되거나, 혹은 이곳 저곳에서 재사용될 수 있으므로 그에 대비해서 컴포넌트화 시켜 재사용성을 올려줄 수 있음
+
+// 현재 경로를 반환할 때 내가 link에 설정해둔 값으로 set 함수가 업데이트 되니까 / 를 제외한 search , new 과 같은 값이 들어오는데
+// window.loaction.pathname 을 쓰면 / 이 붙은 값이 넘어와서 둘 다 처리 해줌
