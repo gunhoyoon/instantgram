@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
-
+import { usePathname } from "next/navigation";
 import ColorButton from "./ui/ColorButton";
 import HomeIcon from "./ui/icons/HomeIcon";
 import SearchIcon from "./ui/icons/SearchIcon";
@@ -9,11 +8,16 @@ import SearchFillIcon from "./ui/icons/SearchFillIcon";
 import NewIcon from "./ui/icons/NewIcon";
 import NewFillIcon from "./ui/icons/NewFillIcon";
 import HomeFillIcon from "./ui/icons/HomeFillIcon";
-
+import { useSession, signIn, signOut } from "next-auth/react";
 export default function Header() {
-  const [path, setPath] = useState(window.location.pathname);
-  console.log(path);
+  // const [path, setPath] = useState(window.location.pathname);
+  const pathname = usePathname();
 
+  const { data: session } = useSession();
+  console.log(session?.user);
+  // session?.user :  {name: '윤건호',
+  //  email: 'rkdus5964@gmail.com',
+  //  image: 'https://lh3.googleusercontent.com/a/ACg8ocKDaBEu-HAA0f5PyDv49K_Z1k4d3TWCxEF9AbJ_TGwJ=s96-c'}
   const menu = [
     {
       href: "/",
@@ -33,29 +37,34 @@ export default function Header() {
   ];
   return (
     <div className="flex justify-between items-center px-6">
-      <Link
-        href={"/"}
-        onClick={() => {
-          setPath("home");
-        }}
-      >
+      <Link href={"/"}>
         <h1 className="text-3xl font-bold">Instantgram</h1>
       </Link>
       <nav>
         <ul className="flex gap-4 items-center p-4 ">
           {menu.map((item) => (
             <li key={item.href}>
-              <Link
-                href={item.href}
-                onClick={() => {
-                  setPath(item.href);
-                }}
-              >
-                {path === item.href ? item.clickedIcon : item.icon}
+              <Link href={item.href}>
+                {pathname === item.href ? item.clickedIcon : item.icon}
               </Link>
             </li>
           ))}
-          <ColorButton text="Sign in" onClick={() => {}} />
+          {session?.user ? (
+            <ColorButton
+              text="Sign out"
+              onClick={() => {
+                signOut();
+              }}
+              // 세션 삭제
+            />
+          ) : (
+            <ColorButton
+              text="Sign in"
+              onClick={() => {
+                signIn();
+              }}
+            />
+          )}
         </ul>
       </nav>
     </div>
@@ -66,3 +75,10 @@ export default function Header() {
 
 // 현재 경로를 반환할 때 내가 link에 설정해둔 값으로 set 함수가 업데이트 되니까 / 를 제외한 search , new 과 같은 값이 들어오는데
 // window.loaction.pathname 을 쓰면 / 이 붙은 값이 넘어와서 둘 다 처리 해줌
+
+// [next-auth][warn][NEXTAUTH_URL]
+// [next-auth][warn][NO_SECRET]
+//  NEXTAUTH 와 SECRET 에 대한 정보를 전달해줘야함
+// NEXTAUTH url 배포할 때 url
+// NEXTAUTH secret 은 토큰을 발급 받을 때 SECRET
+// NEXTAUTH secret https://www.strongpasswordgenerator.org/ 여기서 발급 받음

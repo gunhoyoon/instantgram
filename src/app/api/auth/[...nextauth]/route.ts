@@ -16,7 +16,7 @@ const handler = NextAuth({
 // session provider 로 우리 어플리케이션을 한 단계 감쌌기 때문에 그 안에 있는 자식들은 useSesstion 이라는 함수를 통해 해당 데이터(정보)를 제공 받을 수 있게 된다.
 
 export { handler as GET, handler as POST };
-
+// src / app / api / auth / [...nextauth] / route.ts
 // api/auth/*(sign in , callback , sign out) 과 같은 요청이 온다면 nextjs 라이브러리가 알아서 자체적으로 처리를 해줌
 // 아 그래서 다이나믹 라우터 [...nextauth] 를 사용했고 이걸 통해 요청을 할 때 sign in 이든 out 이든 callback 까지 다이나믹하게 처리가 가능한거임
 // 그 함수의 기능은 next auth 혹은 next js 안에서 내장이 되어있는건가
