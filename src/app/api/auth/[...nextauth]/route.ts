@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-const handler = NextAuth({
+export const handler = NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_OAUTH_ID || "",
@@ -8,6 +8,10 @@ const handler = NextAuth({
       // GOOGLE_CLIENT_ID , GOOGLE_CLIENT_SECRET 의 값이 undefined 일 수 있으므로 , 빈 문자열도 같이 처리
     }),
   ],
+  pages: {
+    signIn: "/auth/signin",
+    // signOut: "/auth/signout",
+  },
 });
 // 어떤 로그인을 허용할건지  : 현재는 구글만 허용하기 때문에 그에 대한 명시만 해줬음
 // 이제 클라이언트 단에서 세션 프로바이더를 사용하게만 해주면 된다 = 어플리케이션이 세션 프로바이더를 사용하게 해줘야함

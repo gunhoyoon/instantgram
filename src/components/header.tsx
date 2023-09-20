@@ -9,9 +9,11 @@ import NewIcon from "./ui/icons/NewIcon";
 import NewFillIcon from "./ui/icons/NewFillIcon";
 import HomeFillIcon from "./ui/icons/HomeFillIcon";
 import { useSession, signIn, signOut } from "next-auth/react";
+import Image from "next/image";
 export default function Header() {
   // const [path, setPath] = useState(window.location.pathname);
   const pathname = usePathname();
+  console.log(pathname);
 
   const { data: session } = useSession();
   console.log(session?.user);
@@ -49,12 +51,15 @@ export default function Header() {
               </Link>
             </li>
           ))}
+
           {session?.user ? (
             <ColorButton
               text="Sign out"
               onClick={() => {
                 signOut();
               }}
+              size="small"
+
               // 세션 삭제
             />
           ) : (
@@ -63,6 +68,7 @@ export default function Header() {
               onClick={() => {
                 signIn();
               }}
+              size="small"
             />
           )}
         </ul>
