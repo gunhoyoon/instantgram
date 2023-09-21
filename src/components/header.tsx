@@ -10,13 +10,20 @@ import NewFillIcon from "./ui/icons/NewFillIcon";
 import HomeFillIcon from "./ui/icons/HomeFillIcon";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
+import Avatar from "./Avatar";
 export default function Header() {
   // const [path, setPath] = useState(window.location.pathname);
   const pathname = usePathname();
   console.log(pathname);
 
   const { data: session } = useSession();
+  // user: {
+  //   name: string
+  //   email: string
+  //   image: string
+  // }, 와 같은 저옵를 담고 있고, 민감한 정보들은 담고 있지 않음 , 'client api'
   console.log(session?.user);
+  const user = session?.user;
   // session?.user :  {name: '윤건호',
   //  email: 'rkdus5964@gmail.com',
   //  image: 'https://lh3.googleusercontent.com/a/ACg8ocKDaBEu-HAA0f5PyDv49K_Z1k4d3TWCxEF9AbJ_TGwJ=s96-c'}
@@ -51,26 +58,32 @@ export default function Header() {
               </Link>
             </li>
           ))}
-
-          {session?.user ? (
-            <ColorButton
-              text="Sign out"
-              onClick={() => {
-                signOut();
-              }}
-              size="small"
-
-              // 세션 삭제
-            />
-          ) : (
-            <ColorButton
-              text="Sign in"
-              onClick={() => {
-                signIn();
-              }}
-              size="small"
-            />
+          {user && (
+            <li>
+              <Link href={`/user/${user.username}`}>
+                <Avatar image={user.image} />
+              </Link>
+            </li>
           )}
+          <li>
+            {session ? (
+              <ColorButton
+                text="Sign out"
+                onClick={() => {
+                  signOut();
+                }}
+
+                // 세션 삭제
+              />
+            ) : (
+              <ColorButton
+                text="Sign in"
+                onClick={() => {
+                  signIn();
+                }}
+              />
+            )}
+          </li>
         </ul>
       </nav>
     </div>

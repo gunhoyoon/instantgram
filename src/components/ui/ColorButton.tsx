@@ -3,7 +3,8 @@ import React from "react";
 type Props = {
   text: string;
   onClick: () => void;
-  size: "small" | "big";
+  size?: "small" | "big";
+  // 타입 옵셔널로 주는거
 };
 
 export default function ColorButton({ text, onClick, size = "small" }: Props) {

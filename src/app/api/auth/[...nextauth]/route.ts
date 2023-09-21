@@ -1,6 +1,7 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-export const handler = NextAuth({
+// nextjs 13.2버전을 지원하면서 기존 폴더 구조와는 조금 달라짐 page > app 차이
+export const handler: NextAuthOptions = NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_OAUTH_ID || "",
@@ -8,12 +9,36 @@ export const handler = NextAuth({
       // GOOGLE_CLIENT_ID , GOOGLE_CLIENT_SECRET 의 값이 undefined 일 수 있으므로 , 빈 문자열도 같이 처리
     }),
   ],
+  callbacks: {
+    async session({ session }) {
+      const user = session?.user;
+      if (user) {
+        session.user = {
+          ...user,
+          username: user.email?.split("@")[0] || "",
+          // 하지만 기존 user의 정보엔 username 프로퍼티가 없기 때문에 타입을 추가해줌
+        };
+      }
+      // console.log(session, "session21312");
+      // {
+      //   user: {
+      //     name: '윤건호',
+      //     email: 'rkdus5964@gmail.com',
+      //     image: 'https://lh3.googleusercontent.com/a/ACg8ocKDaBEu-HAA0f5PyDv49K_Z1k4d3TWCxEF9AbJ_TGwJ=s96-c'
+      //   },
+      //   expires: '2023-10-21T10:23:59.988Z'
+      // } 세션 안에는 user 의 정보. 만료되는 시간 이 나와있는데, 이 정보로 로그인을 했을 때 sanity 데이터 베이스에 해당 사용자의 정보가 없다면, 추가해주는 식으로 하면 됨
+      // 이 때 필요한게 username 사용자의 id가 필요함
+      return session;
+    },
+  },
   pages: {
     signIn: "/auth/signin",
+    //  signin 시  /auth/signin 여기로 가줘(페이지 생성해야됨)
     // signOut: "/auth/signout",
   },
 });
-// 어떤 로그인을 허용할건지  : 현재는 구글만 허용하기 때문에 그에 대한 명시만 해줬음
+// 어떤 로그인을 허용할건지 (NextAuth에 추가해주면 됨) : 현재는 구글만 허용하기 때문에 그에 대한 명시만 해줬음
 // 이제 클라이언트 단에서 세션 프로바이더를 사용하게만 해주면 된다 = 어플리케이션이 세션 프로바이더를 사용하게 해줘야함
 // 그러면  useSession 이라는 훅에서 필요한 useSesstion , sign in , sign out 이런 것들에 접근하고 사용할 수 있게 됨
 // next auth 라는 라이브러리가 useSesstion 이런 간편한 훅을 제공해주고 const {data : sesstion} = useSesstion(); 현재 로그인한 사용자가 있는지 없는지를 판단할 수 있게 된다.

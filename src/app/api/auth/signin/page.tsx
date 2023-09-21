@@ -15,21 +15,24 @@ export default async function SigninPage({
   searchParams: { callbackUrl },
 }: Props) {
   const session = await getServerSession(handler);
-
+  console.log(session, "session");
+  // 현재 signin page 자체는 서버 컴포넌트임
+  // 그래서 useSession 이 아니라 getServerSession 을 사용한거, getServerSession 은 서버측에서 세션 객체를 검색하기 때문임
+  // 이 방법은 NextAuth.js를 데이터베이스와 함께 사용할 때 특히 유용하며, 서버 측에서 getSession 대신 사용하면 응답 시간을 크게 단축할 수 있음
   if (session) {
     redirect("/");
   }
+  // 세션에 대한 정보는 client 로부터 들어온 헤더 안에 있는데 페이지 요청이 들어올 때 마다 요청안에 세션이 있는지를 확인하고,
+  // 그에 따른 페이지 제공(대응)을 하기 때문에 ssr 로 동작(12버전에서 getServerSideProps 사용)
 
   const providers = (await getProviders()) ?? {};
+  console.log(providers, "providers");
   // 왼쪽 피연산자가 null 이거나 undefined 일 때 우측 반환
   // 해당 providers 를 받아서 사용자에게 ui 를 받아주고 클릭 이벤트도 받고 하려면 클라이언트 컴포넌트가 필요함
   // 그래서 서버 컴포넌트안에 부분적으로 클라이언트를 만들어넣어야함
   return (
-    <section className="flex justify-center mt-[30%]">
+    <section className="flex justify-center mt-24">
       <Signin providers={providers} callbackUrl={callbackUrl ?? "/"} />
     </section>
   );
 }
-// 현재 signin page 자체는 서버 컴포넌트임
-// 그래서 useSession 이 아니라 getServerSession 을 사용한거, getServerSession 은 서버측에서 세션 객체를 검색하기 때문임
-// 이 방법은 NextAuth.js를 데이터베이스와 함께 사용할 때 특히 유용하며, 서버 측에서 getSession 대신 사용하면 응답 시간을 크게 단축할 수 있음
