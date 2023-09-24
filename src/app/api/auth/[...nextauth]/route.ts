@@ -9,17 +9,32 @@ export const handler: NextAuthOptions = NextAuth({
       // GOOGLE_CLIENT_ID , GOOGLE_CLIENT_SECRET 의 값이 undefined 일 수 있으므로 , 빈 문자열도 같이 처리
     }),
   ],
+  // 리디렉션 콜백은 사용자가 콜백 URL로 리디렉션될 때마다(예: 로그인 또는 로그아웃 시) 호출됩니다.
+  // 로그아웃 , 로그인 시 기존 url 로 redirection
   callbacks: {
+    async signIn({ user }) {
+      console.log(user, "user101010");
+      return true;
+    },
+    // 서버에서 데이터베이스에 접근 / 데이터 추가 / 삭제 등 할 수 있는게
     async session({ session }) {
       const user = session?.user;
       if (user) {
         session.user = {
           ...user,
           username: user.email?.split("@")[0] || "",
-          // 하지만 기존 user의 정보엔 username 프로퍼티가 없기 때문에 타입을 추가해줌
+          // 하지만 기존 user의 정보엔 username 프로퍼티가 없 기 때문에 커스텀 타입을 추가해줌
+          // {
+          //   user: {
+          //     name: '윤건호',
+          //     email: 'rkdus5964@gmail.com',
+          //     image: 'https://lh3.googleusercontent.com/a/ACg8ocKDaBEu-HAA0f5PyDv49K_Z1k4d3TWCxEF9AbJ_TGwJ=s96-c'
+          //   }, 기존의 키값에 username: user.email?.split("@")[0] || "", 요 데이터를 추가할거임,
+          //  아마 추가 되는 시점은 로그인하고나서 기존 url 로 redirection 될 때
+          // 근데 username이 고유의 id인지는 잘 모르겠음, 고유의 id로 사용이 가능한가
         };
       }
-      // console.log(session, "session21312");
+      console.log(session, "session21312");
       // {
       //   user: {
       //     name: '윤건호',
@@ -27,8 +42,8 @@ export const handler: NextAuthOptions = NextAuth({
       //     image: 'https://lh3.googleusercontent.com/a/ACg8ocKDaBEu-HAA0f5PyDv49K_Z1k4d3TWCxEF9AbJ_TGwJ=s96-c'
       //   },
       //   expires: '2023-10-21T10:23:59.988Z'
-      // } 세션 안에는 user 의 정보. 만료되는 시간 이 나와있는데, 이 정보로 로그인을 했을 때 sanity 데이터 베이스에 해당 사용자의 정보가 없다면, 추가해주는 식으로 하면 됨
-      // 이 때 필요한게 username 사용자의 id가 필요함
+      // } 세션 안에는 user 의 정보. 만료되는 시간 이 나와있는데, 이 정보로 로그인을 했을 때 sanity 데이터 베이스에 해당 사용자의 정보가 없다면
+      // 추가해주는 식으로 하면 됨 이 때 필요한게 username 사용자의 id가 필요함. 그리고 해당 username 키의 값을 email의 앞 부분으로 할 거임
       return session;
     },
   },
