@@ -1,3 +1,4 @@
+import { addUser } from "@/service/user";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 // nextjs 13.2버전을 지원하면서 기존 폴더 구조와는 조금 달라짐 page > app 차이
@@ -12,11 +13,25 @@ export const handler: NextAuthOptions = NextAuth({
   // 리디렉션 콜백은 사용자가 콜백 URL로 리디렉션될 때마다(예: 로그인 또는 로그아웃 시) 호출됩니다.
   // 로그아웃 , 로그인 시 기존 url 로 redirection
   callbacks: {
-    async signIn({ user }) {
-      console.log(user, "user101010");
+    async signIn({ user: { id, name, image, email } }) {
+      if (!email) {
+        return false;
+      }
+      // 기술적으로는 email 없이 가입을 하지 못하지만 타입 정의에 email이 옵셔널로 되어있기 때문에 예외처리를 해줌
+      addUser({
+        id,
+        name: name || "",
+        image,
+        email,
+        username: email.split("@")[0],
+      });
+      // 유저 생성 , 중복 x
+      // signin 시 user가 기존에 없다면 sanity db에 추가해줘야하는데 해당 user 데이터에는 우리가 이후에 추가한 username 이 없다.
+      // 그래서 기존 데이터 + username까지 추가해주기 위해 데이터 가공이 필요
       return true;
     },
     // 서버에서 데이터베이스에 접근 / 데이터 추가 / 삭제 등 할 수 있는게
+    // 로그인이 되었을 때,
     async session({ session }) {
       const user = session?.user;
       if (user) {
@@ -30,7 +45,6 @@ export const handler: NextAuthOptions = NextAuth({
           //     email: 'rkdus5964@gmail.com',
           //     image: 'https://lh3.googleusercontent.com/a/ACg8ocKDaBEu-HAA0f5PyDv49K_Z1k4d3TWCxEF9AbJ_TGwJ=s96-c'
           //   }, 기존의 키값에 username: user.email?.split("@")[0] || "", 요 데이터를 추가할거임,
-          //  아마 추가 되는 시점은 로그인하고나서 기존 url 로 redirection 될 때
           // 근데 username이 고유의 id인지는 잘 모르겠음, 고유의 id로 사용이 가능한가
         };
       }
@@ -44,6 +58,8 @@ export const handler: NextAuthOptions = NextAuth({
       //   expires: '2023-10-21T10:23:59.988Z'
       // } 세션 안에는 user 의 정보. 만료되는 시간 이 나와있는데, 이 정보로 로그인을 했을 때 sanity 데이터 베이스에 해당 사용자의 정보가 없다면
       // 추가해주는 식으로 하면 됨 이 때 필요한게 username 사용자의 id가 필요함. 그리고 해당 username 키의 값을 email의 앞 부분으로 할 거임
+      //  sign in 이 되고 나서, username이 추가되는 걸 알 수 있음
+
       return session;
     },
   },
