@@ -27,6 +27,7 @@ export default function RootLayout({
             <Header />
           </header>
           <main>{children}</main>
+          {/* authcontext 내부는 전부 클라이언트 */}
         </AuthContext>
       </body>
     </html>

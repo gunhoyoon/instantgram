@@ -8,8 +8,13 @@ export const handler: NextAuthOptions = NextAuth({
       clientId: process.env.GOOGLE_OAUTH_ID || "",
       clientSecret: process.env.GOOGLE_OAUTH_SECRET || "",
       // GOOGLE_CLIENT_ID , GOOGLE_CLIENT_SECRET 의 값이 undefined 일 수 있으므로 , 빈 문자열도 같이 처리
+      // 어떤 로그인을 허용할건지에 대한 설정을 구글 프로바이더 하나만 설정해뒀음.
+      // 이렇게 설정하면 signin , signout , callback 에 관한 처리를 해준다.
+      // 그럼 결국 구글에 관한걸 허용함으로써 로그인, 아웃, 콜백에 대한 처리가 가능해진거
+      // 결국 커스텀 페이지를 위한 signin의 경로 설정도 여기서 해줌
     }),
   ],
+
   // 리디렉션 콜백은 사용자가 콜백 URL로 리디렉션될 때마다(예: 로그인 또는 로그아웃 시) 호출됩니다.
   // 로그아웃 , 로그인 시 기존 url 로 redirection
   callbacks: {
@@ -34,11 +39,12 @@ export const handler: NextAuthOptions = NextAuth({
     // 로그인이 되었을 때,
     async session({ session }) {
       const user = session?.user;
+      console.log(session, "session123");
       if (user) {
         session.user = {
           ...user,
           username: user.email?.split("@")[0] || "",
-          // 하지만 기존 user의 정보엔 username 프로퍼티가 없 기 때문에 커스텀 타입을 추가해줌
+          // 하지만 기존 user의 정보엔 username 프로퍼티가 없기 때문에 커스텀 타입을 추가해줌
           // {
           //   user: {
           //     name: '윤건호',
@@ -48,7 +54,7 @@ export const handler: NextAuthOptions = NextAuth({
           // 근데 username이 고유의 id인지는 잘 모르겠음, 고유의 id로 사용이 가능한가
         };
       }
-      console.log(session, "session21312");
+      console.log(session, "session1234");
       // {
       //   user: {
       //     name: '윤건호',
@@ -65,7 +71,7 @@ export const handler: NextAuthOptions = NextAuth({
   },
   pages: {
     signIn: "/auth/signin",
-    //  signin 시  /auth/signin 여기로 가줘(페이지 생성해야됨)
+    //  signin 시  /auth/signin 여기로 가줘(페이지 생성해야됨)라는 말을 전달한거임
     // signOut: "/auth/signout",
   },
 });
