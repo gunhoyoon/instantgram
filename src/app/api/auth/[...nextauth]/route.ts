@@ -1,8 +1,8 @@
 import { addUser } from "@/service/user";
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { AuthOptions, NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 // nextjs 13.2버전을 지원하면서 기존 폴더 구조와는 조금 달라짐 page > app 차이
-export const handler: NextAuthOptions = NextAuth({
+export const authOptions: AuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_OAUTH_ID || "",
@@ -74,13 +74,13 @@ export const handler: NextAuthOptions = NextAuth({
     //  signin 시  /auth/signin 여기로 가줘(페이지 생성해야됨)라는 말을 전달한거임
     // signOut: "/auth/signout",
   },
-});
+};
 // 어떤 로그인을 허용할건지 (NextAuth에 추가해주면 됨) : 현재는 구글만 허용하기 때문에 그에 대한 명시만 해줬음
 // 이제 클라이언트 단에서 세션 프로바이더를 사용하게만 해주면 된다 = 어플리케이션이 세션 프로바이더를 사용하게 해줘야함
 // 그러면  useSession 이라는 훅에서 필요한 useSesstion , sign in , sign out 이런 것들에 접근하고 사용할 수 있게 됨
 // next auth 라는 라이브러리가 useSesstion 이런 간편한 훅을 제공해주고 const {data : sesstion} = useSesstion(); 현재 로그인한 사용자가 있는지 없는지를 판단할 수 있게 된다.
 // session provider 로 우리 어플리케이션을 한 단계 감쌌기 때문에 그 안에 있는 자식들은 useSesstion 이라는 함수를 통해 해당 데이터(정보)를 제공 받을 수 있게 된다.
-
+const handler: NextAuthOptions = NextAuth(authOptions);
 export { handler as GET, handler as POST };
 // src / app / api / auth / [...nextauth] / route.ts
 // api/auth/*(sign in , callback , sign out) 과 같은 요청이 온다면 nextjs 라이브러리가 알아서 자체적으로 처리를 해줌
