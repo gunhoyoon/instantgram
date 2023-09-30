@@ -2,6 +2,7 @@
 import React from "react";
 import Avatar from "./Avatar";
 import { User } from "@/model/User";
+import Link from "next/link";
 
 type Props = {
   user: User;
@@ -13,7 +14,11 @@ export default function SideBar({ user }: Props) {
   return (
     <>
       <div className="flex items-center">
-        {user?.image && <Avatar image={user?.image} highlight />}
+        {user?.image && (
+          <Link href={`/user/${user.username}`}>
+            <Avatar image={user?.image} highlight />
+          </Link>
+        )}
         <div className="ml-4">
           <p className="font-bold">{user?.username}</p>
           <p className="text-lg text-neutral-500 leading-4">{user?.name}</p>

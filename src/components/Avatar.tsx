@@ -4,18 +4,23 @@ type Props = {
   image?: string | null;
   size?: "small" | "nomal";
   highlight?: boolean;
+  // 타입을 넘겨주는거
 };
 // 해당 컴포넌트엔 3가지 속성이 있고, 전부 옵셔널이다.
 // Avatar를 사용할 때 size 라는 속성의 별개 정의가 없다면 nomal 로 설정할 것이다.
 // higtlight는 불리언인데 따로 정의를 하지 않는다면 false 로 사용하지 않을 것이다.
-
+// avatar 에 프롭으로 size와 highlight 를 넘겨주는데, 이 프롭은 넘겨주는 함수의 인자가 될 거임
 export default function Avatar({
   image,
   size = "nomal",
   highlight = false,
-}: Props) {
+}: // 값을 넘겨주는거
+Props) {
   return (
     // div 태그는 외부 링과같은 css 를 표현하기 위해서 사용,
+    // 기본적으로 size : nomal, highlight : false 값이 들어가는 걸 볼 수 있음.
+    // size는 기본 nomal 이지만, nomal에 대한 자세한 크기 정보는 함수에 적혀있고 해당 함수도 조건부로 되어있음
+    // Avatar 컴포넌트를 사용하는 쪽에서 size 나 highlight 에 대한 사용을 정할 수 있게 됨
     <div className={getContainerStyle(size, highlight)}>
       {/*  eslint-disable-next-line @next/next/no-img-element */}
       <img
@@ -40,6 +45,8 @@ function getContainerStyle(size: string, highlight: boolean): string {
 
   return `${baseStyle} ${highlightStyle} ${sizeStyle}`;
 }
+// className 자체에 조건부 렌더링을 사용해서 크기를 조절하거나 하는건 봤어도, 이렇게 여러개의 변수에 조건이나 값을 담아서 함수 인자에 따라서 값을 리턴해주는 식의 조건문이 담긴
+// 함수 자체는 처음봄
 
 function getImageSizeStyle(size: string): string {
   return size === "small"
