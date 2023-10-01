@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import Avatar from "./Avatar";
 import { User } from "@/model/User";
@@ -33,3 +32,4 @@ export default function SideBar({ user }: Props) {
 }
 // AuthContext 를 통해 sessionProvider 를 제공하고 client 컴포넌트를 감싸고 있기 때문에, useSession 으로 세선 정보 접근 가능
 // 같은 컴포넌트를 쓰는데 화면이 다르게 어캐함
+// 서버 컴포넌트. 페이지에서 이미 알고 있는 user를 props 으로 전달해주면 props에 맞게 해당 페이지를 보여주기만 하는 100% 정적인 페이지임
