@@ -21,3 +21,4 @@ export async function addUser({ name, username, id, image, email }: OAuthUser) {
     bookmarks: [],
   });
 }
+// 중복되지 않는 유저 추가 , 유저가 가지고 있는 키와 값
