@@ -2,7 +2,7 @@
 import React from "react";
 import useSWR from "swr";
 import Avatar from "./Avatar";
-import MultiCarousel from "./MultiCarousel";
+import ScrollableBar from "./ui/ScrollableBar";
 import { DetailUser } from "@/model/User";
 import { PropagateLoader } from "react-spinners";
 import Link from "next/link";
@@ -45,22 +45,21 @@ export default function FollowingBar() {
       )}
 
       {users && users?.length > 0 && (
-        <ul className="w-full flex gap-2">
+        <ScrollableBar>
           {users?.map(({ username, image }) => (
-            <li key={username}>
-              <Link
-                href={`/user/${username}`}
-                className="flex flex-col items-center w-20"
-              >
-                <Avatar image={image} highlight />
-                <p className="w-full text-sm text-center  text-ellipsis overflow-hidden">
-                  {username}
-                </p>
-                {/* username이 길 경우 text-ellipsis overflow-hidden 처리, 부모의 너비에 한계 + P 태그 자체에도 너비가 정해져야함 */}
-              </Link>
-            </li>
+            <Link
+              key={username}
+              href={`/user/${username}`}
+              className="flex flex-col items-center w-20"
+            >
+              <Avatar image={image} highlight />
+              <p className="w-full text-sm text-center  text-ellipsis overflow-hidden">
+                {username}
+              </p>
+              {/* username이 길 경우 text-ellipsis overflow-hidden 처리, 부모의 너비에 한계 + P 태그 자체에도 너비가 정해져야함 */}
+            </Link>
           ))}
-        </ul>
+        </ScrollableBar>
       )}
     </section>
   );
@@ -77,14 +76,14 @@ export default function FollowingBar() {
 {
   /* <ul className="flex gap-4 justify-center">
 {following ? (
-  <MultiCarousel>
+  <ScrollableBar>
     {following?.map(({ username, image }: FollowingItem) => (
       <li key={username}>
         <Avatar image={image} highlight />
         <p>{username}</p>
       </li>
     ))}
-  </MultiCarousel>
+  </ScrollableBar>
 ) : (
   "ㅇㅇ"
 )}
