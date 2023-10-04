@@ -17,8 +17,24 @@ export async function addUser({ name, username, id, image, email }: OAuthUser) {
     name,
     image,
     following: [],
-    follower: [],
+    followers: [],
     bookmarks: [],
   });
 }
 // 중복되지 않는 유저 추가 , 유저가 가지고 있는 키와 값
+export async function getUserByUsername(username: string) {
+  // example
+  // const posts = await client.fetch('*[_type == "post"]')
+  // ('*[_type == "post"]') 원하는 데이터를 가져올 때 사용하는 이 텍스트가 쿼리언어임
+  return client.fetch(
+    `*[_type == "user" && username == "${username}"][0]{
+      ...,
+      "id" : _id,
+      following[]->{username, image},
+      followers[]->{username, image},
+      "bookmarks":bookmarks[]-> id
+    }`
+  );
+}
+
+// console.log 에 user 타입 + username이 같은 데이터가 반환이 안됨

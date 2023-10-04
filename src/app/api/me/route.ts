@@ -1,6 +1,7 @@
 import getMyServerSessionData from "@/service/getMyServerSessionData";
 import { NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
+import { getUserByUsername } from "@/service/user";
 // GET 요청에 대한 유효한 인자들이 전달되었는지 확인한 뒤에, 다른 곳에서 이거 유효하니까 처리해줘 라는 식의 로직을 분할하는 코드를 작성함이 좋다.
 export async function GET(request: Request) {
   const session = await getMyServerSessionData(authOptions);
@@ -8,7 +9,9 @@ export async function GET(request: Request) {
   if (!user) {
     return new Response("Authentication Error!!", { status: 401 });
   }
-  return NextResponse.json("hello !!");
+  return getUserByUsername(user.username).then((data) =>
+    NextResponse.json(data)
+  );
   // api/me 로 나에 대한 정보 요청을 하면 (요청)header에 있는 쿠키에 대한 정보를 근거로 사용자가 누군지를 알아야함
   // 사용자가 보낸 req 에 있는 헤더안에 쿠키에 있는 토큰을 파싱해서 그 토큰안에 있는 정보(세션에 관한 정보 username , email 등)를 해독해서 가지고 와야함
 }

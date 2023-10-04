@@ -27,7 +27,7 @@ export default function RootLayout({
           <header className="sticky top-0 bg-white z-10 border-b">
             <Header />
           </header>
-          <main>
+          <main className="w-full flex  justify-center bg-neutral-50 min-h-full">
             <SWRConfigContext>{children}</SWRConfigContext>
           </main>
           {/* authcontext 내부는 전부 클라이언트 */}

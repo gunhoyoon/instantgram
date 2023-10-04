@@ -20,7 +20,8 @@ export default async function HomePage() {
     // sideBar + header 만 ssr로 처리, prerender 할 수 있게 처리하고,
     // FollowingBar + PostList 는 CSR로 처리함, 그리고 그 안에서도 골격에 따라 pre render할 수 있는 부분은 따로 처리
     <section className="w-full flex flex-col md:flex-row max-w-[850px] p-4">
-      <div className="w-full basis-3/4">
+      <div className="w-full basis-3/4 min-w-0">
+        {/* flex-box 에서 각각의 아이템들은 최소의 너비를 가지고 있는데 그걸 0으로 해줌 */}
         {/* 아래 컴포넌트들은 사용자의 정보로만 구성하긴 어려움
         사용자의 정보에 따라 누굴 팔로우했는지 어떤 게시물을 올렸는지 데이터를 받아와야함
         SSR로 할건지 CSR로 할건지,SSR로 한다면 CSR을 어느 부분에 섞어서 사용할건지를 결정  */}
@@ -28,7 +29,7 @@ export default async function HomePage() {
         <PostList />
       </div>
 
-      <div className="basis-1/4">
+      <div className="basis-1/4 ml-8">
         <SideBar user={session} />
         {/* 100% 사용자의 정보로 움직이는 정적인 페이지 SSG */}
       </div>

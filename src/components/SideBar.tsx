@@ -26,7 +26,9 @@ export default function SideBar({ user }: Props) {
       <p className="text-sm text-neutral-500 mt-8">
         About﹒Help﹒Press﹒API﹒Jobs﹒Privacy﹒Terms﹒Location﹒Language
       </p>
-      <p>@Copyright INSTANTGRAM from METAL</p>
+      <p className="text-sm text-neutral-500 font-bold mt-8">
+        @Copyright INSTANTGRAM from METAL
+      </p>
     </>
   );
 }
