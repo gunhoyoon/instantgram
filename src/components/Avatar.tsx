@@ -1,8 +1,8 @@
 import React from "react";
-
+type AvaterSize = "small" | "medium" | "large";
 type Props = {
   image?: string | null;
-  size?: "small" | "nomal";
+  size?: AvaterSize;
   highlight?: boolean;
   // 타입을 넘겨주는거
 };
@@ -12,7 +12,7 @@ type Props = {
 // avatar 에 프롭으로 size와 highlight 를 넘겨주는데, 이 프롭은 넘겨주는 함수의 인자가 될 거임
 export default function Avatar({
   image,
-  size = "nomal",
+  size = "large",
   highlight = false,
 }: // 값을 넘겨주는거
 Props) {
@@ -38,22 +38,37 @@ Props) {
   );
 }
 
-function getContainerStyle(size: string, highlight: boolean): string {
+function getContainerStyle(size: AvaterSize, highlight: boolean): string {
   const baseStyle = "rounded-full flex justify-center items-center"; //w-9 h-9 rounded-full bg-gradient-to-bl from-fuchsia-600 via-rose-500 to-amber-300
   const highlightStyle = highlight
     ? "bg-gradient-to-bl from-fuchsia-600 via-rose-500 to-amber-300"
     : "";
-  const sizeStyle = size === "small" ? "w-9 h-9" : "w-[68px] h-[68px]";
+  const sizeStyle = getContainerSize(size);
 
   return `${baseStyle} ${highlightStyle} ${sizeStyle}`;
 }
 // className 자체에 조건부 렌더링을 사용해서 크기를 조절하거나 하는건 봤어도, 이렇게 여러개의 변수에 조건이나 값을 담아서 함수 인자에 따라서 값을 리턴해주는 식의 조건문이 담긴
 // 함수 자체는 처음봄
-
-function getImageSizeStyle(size: string): string {
-  return size === "small"
-    ? "w-[34px] h-[34px] p-[0.1rem]"
-    : "w-16 h-16 p-[0.2rem]";
+function getContainerSize(size: AvaterSize): string {
+  // size === "small" ? "w-9 h-9" : "w-[68px] h-[68px]"
+  switch (size) {
+    case "small":
+      return "w-9 h-9";
+    case "medium":
+      return "w-11 h-11";
+    case "large":
+      return "w-[68px] h-[68px]";
+  }
+}
+function getImageSizeStyle(size: AvaterSize): string {
+  switch (size) {
+    case "small":
+      return "w-[34px] h-[34px] p-[0.1rem]";
+    case "medium":
+      return "w-[42px] h-[42px] p-[0.1rem]";
+    case "large":
+      return "w-16 h-16 p-[0.2rem]";
+  }
 }
 
 // next Image 태그를 사용하고 외부 url에 대한 정보를 next config 파일을 지정해서 사용해야하지만,
