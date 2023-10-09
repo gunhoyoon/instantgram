@@ -1,9 +1,10 @@
 import React from "react";
 import { getServerSession } from "next-auth";
-import { handler } from "../[...nextauth]/route";
+
 import { redirect } from "next/navigation";
 import { getProviders } from "next-auth/react";
 import Signin from "@/components/Signin";
+import { authOptions } from "../[...nextauth]/route";
 
 type Props = {
   searchParams: {
@@ -15,7 +16,7 @@ type Props = {
 export default async function SigninPage({
   searchParams: { callbackUrl },
 }: Props) {
-  const session = await getServerSession(handler);
+  const session = await getServerSession(authOptions);
   // getServerSession 함수를 호출하면 getServerSessionParams 중 하나를 전달해야하는데
   // 여기에 route.ts에서 정의한 handler이고, 여기엔 nextauth 에 필요한 옵션이 들어가있음
   // 현재 signin page 자체는 서버 컴포넌트임

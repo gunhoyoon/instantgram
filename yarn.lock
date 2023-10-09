@@ -310,6 +310,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sanity/image-url@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@sanity/image-url@npm:1.0.2"
+  checksum: fbd2a6e7bd1e9b053c5a8d953c35a17f5d00dcfd792ce115fd7dfb237cbff03c7830fdf64e1ae8c6e00b58c8cabc2673f546d587454359ee02be2e2f8a39bd1e
+  languageName: node
+  linkType: hard
+
 "@swc/helpers@npm:0.5.1":
   version: 0.5.1
   resolution: "@swc/helpers@npm:0.5.1"
@@ -4138,6 +4145,7 @@ __metadata:
   resolution: "test123@workspace:."
   dependencies:
     "@sanity/client": ^6.4.12
+    "@sanity/image-url": ^1.0.2
     "@types/node": 20.6.2
     "@types/react": 18.2.21
     "@types/react-dom": 18.2.7
@@ -4153,6 +4161,7 @@ __metadata:
     react-spinners: ^0.13.8
     swr: ^2.2.4
     tailwindcss: 3.3.3
+    timeago.js: ^4.0.2
     typescript: 5.2.2
   languageName: unknown
   linkType: soft
@@ -4189,6 +4198,13 @@ __metadata:
     readable-stream: ~2.3.6
     xtend: ~4.0.1
   checksum: beb0f338aa2931e5660ec7bf3ad949e6d2e068c31f4737b9525e5201b824ac40cac6a337224856b56bd1ddd866334bbfb92a9f57cd6f66bc3f18d3d86fc0fe50
+  languageName: node
+  linkType: hard
+
+"timeago.js@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "timeago.js@npm:4.0.2"
+  checksum: c785a06988717cb5a00bb96b00ebaa56e83f4b5ed5d87c4c3931fb1bb2591a0e13a7ddc4b6c12c6ee7de64b440ed903c7bd4e0edddb37aade9bfc9ceab5d0db3
   languageName: node
   linkType: hard
 

@@ -16,6 +16,7 @@ export default function Header() {
   // console.log(pathname);
 
   const { data: session } = useSession();
+
   // user: {
   //   name: string
   //   email: string

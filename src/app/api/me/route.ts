@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
 import { getUserByUsername } from "@/service/user";
 // GET 요청에 대한 유효한 인자들이 전달되었는지 확인한 뒤에, 다른 곳에서 이거 유효하니까 처리해줘 라는 식의 로직을 분할하는 코드를 작성함이 좋다.
-export async function GET(request: Request) {
+export async function GET() {
   const session = await getMyServerSessionData(authOptions);
   const user = session.session?.user;
   if (!user) {
