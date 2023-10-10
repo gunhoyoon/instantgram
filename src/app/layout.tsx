@@ -24,7 +24,7 @@ export default function RootLayout({
         <AuthContext>
           {/* 사용자의 정보를 가지고 있는 Context 를 씌워줬으니, 하위에 있는 자식 컴포넌트들에서 authcontext의 데이터를 사용할 수 있음 */}
           {/* AuthContext 는 next-auth에서 제공하는 sesstion provider 를 사용하고 있음 */}
-          <header className="sticky top-0 bg-white z-10 border-b">
+          <header className="order-first sticky top-0 bg-white z-10 border-b">
             <Header />
           </header>
           <main className="w-full flex  justify-center bg-neutral-50 min-h-full">

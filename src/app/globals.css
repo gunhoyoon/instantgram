@@ -8,3 +8,6 @@ body {
   height: 100vh;
   overflow-x: hidden;
 }
+.react-multiple-carousel__arrow {
+  z-index: 9 !important;
+}
