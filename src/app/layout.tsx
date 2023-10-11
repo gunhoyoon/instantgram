@@ -32,6 +32,7 @@ export default function RootLayout({
           </main>
           {/* authcontext 내부는 전부 클라이언트 */}
         </AuthContext>
+        <div id="portal"></div>
       </body>
     </html>
   );
