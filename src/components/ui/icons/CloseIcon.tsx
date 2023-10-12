@@ -1,4 +1,4 @@
-import { MdCancel } from "react-icons/MD";
+import { CgClose } from "react-icons/cg";
 export default function CloseIcon() {
-  return <MdCancel className="h-8 w-8" />;
+  return <CgClose className="h-8 w-8" />;
 }

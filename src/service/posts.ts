@@ -30,3 +30,24 @@ export async function getFollowingPostsOf(username: string) {
 // 타입이 post 인거 뿐만 아니라 사용자 -> author가 로그인 한 사람(username) 에 해당 되는 사람인 것.
 // post를 작성한 사람들의 아이디가 타입이 유저이고, 로그인 한 사람의 팔로잉한 배열에 있는 id를 가지고 오고 싶어 + 결국 해당 id들의 포스트도 가지고 오고 싶은거임.
 // 요약 => 내 게시물 + 내가 팔로잉한 사람들 게시물 가져오고 싶음
+// SimplePost 를 위한 데이터 요청
+
+export async function getPost(id: string) {
+  return client
+    .fetch(
+      `*[_type == "post" && _id == "${id}"][0]{
+      ...,
+      "username" : author->username,
+      "userImage" : author->image,
+      "image" : photo,
+      "likes" : likes[]->username,
+      comments[]{comment, "username": author->username, "image" : author->image},
+      "id":_id,
+      "createdAt" :_createdAt
+      }`
+    )
+    .then((post) => ({ ...post, image: urlFor(post.image) }));
+}
+
+// Detail 페이지를 위한 데이터 요청
+// 데이터가 자꾸 undefiend 로 나왔지만 , 결국 중괄호 하나를 닫아주지 않았음
