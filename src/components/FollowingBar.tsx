@@ -20,13 +20,13 @@ export default function FollowingBar() {
   const { data, error, isLoading } = useSWR<DetailUser>("/api/me");
   // api/me에 정의해놓은 data 를 가지고 올거고 해당 데이터의 타입은 DetailUser야. 이렇게하면 자동완성이 됨. 우리 코드도 예상이 가능해짐
   // 타입으로 인해 예상이 가능해짐
-  console.log(data);
+
   const users = data?.following && [
     ...data?.following,
     ...data?.following,
     ...data?.following,
   ];
-  // console.log(Following);
+
   // 1. 클라이언트 컴포넌트에서 백엔드에게 api/me 를 통해 사용자의 대한 정보를 가져옴
   // 2. 백엔드에서는 현재 로그인된 사용자의 세션 정보를 이용해서
   // 3. 백엔드에서 사용자의 상세 정보를 Sanity 에서 가지고 옴 (followings에 대한 )

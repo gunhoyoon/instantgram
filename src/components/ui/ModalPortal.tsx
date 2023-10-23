@@ -7,6 +7,7 @@ export default function ModalPortal({ children }: Props) {
   if (typeof window === "undefined") {
     return null;
   }
+  <button>Button</button>;
   // 위 컴포넌트가 브라우저에서 동작하는것이 아니라면,
   //  해당 코드가 서버에서 동작하게 되면 null 을 리턴함, 즉 서버에서 렌더링 되는 것을 막곘음.
   const node = document.getElementById("portal") as Element;

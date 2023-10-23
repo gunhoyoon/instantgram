@@ -39,7 +39,6 @@ export const authOptions: AuthOptions = {
     // 로그인이 되었을 때,
     async session({ session }) {
       const user = session?.user;
-      console.log(session, "session123");
       if (user) {
         session.user = {
           ...user,
@@ -54,7 +53,6 @@ export const authOptions: AuthOptions = {
           // 근데 username이 고유의 id인지는 잘 모르겠음, 고유의 id로 사용이 가능한가
         };
       }
-      console.log(session, "session1234");
       // {
       //   user: {
       //     name: '윤건호',

@@ -27,7 +27,7 @@ export type FullPost = {
 
 // author
 // :
-// {_ref: 'bd5ece56-03e3-418b-9acb-74cd9d36b8a7', _type: 'reference'}
+// {_ref: 'bd5ece56-03e3-418b-9acb-74cd9d36b8a7' _type: 'reference'}
 // comments
 // :
 // 1

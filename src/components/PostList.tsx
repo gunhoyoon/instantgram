@@ -11,7 +11,6 @@ export default function PostList() {
     error,
     isLoading: loading,
   } = useSWR<SimplePost[]>("/api/posts");
-  console.log(posts, "POST");
 
   return (
     <section>

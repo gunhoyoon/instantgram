@@ -4,10 +4,11 @@ import React, { useState } from "react";
 import Image from "next/image";
 import CommentForm from "./CommentForm";
 import ActionBar from "./ActionBar";
-import ModalPortal from "./ui/\bModalPortal";
+
 import PostModal from "./PostModal";
 import PostDetail from "./PostDetail";
 import PostUserAvatar from "./PostUserAvatar";
+import ModalPortal from "./ui/ModalPortal";
 type Props = {
   post: SimplePost;
   priority?: boolean;
@@ -15,7 +16,7 @@ type Props = {
 
 export default function PostListCard({ post, priority = false }: Props) {
   const { userImage, username, image, text, createdAt, likes } = post;
-  console.log(post, "post");
+
   const [isOpenModal, setIsOpenModal] = useState(false);
   return (
     <article className="rounded-lg shadow-md border border-gray-200">
@@ -49,4 +50,3 @@ export default function PostListCard({ post, priority = false }: Props) {
 }
 // 모달창 일단 위에 띄움 이제 스타일 / 상세 페이지 구조.
 // 근데 여기서 children 의 구조가
-//

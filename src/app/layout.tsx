@@ -20,14 +20,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={openSans.className}>
-      <body className="w-full max-w-sereen-xl overflow-auto mx-auto">
+      <body className="w-full bg-neutral-50 overflow-auto">
         <AuthContext>
           {/* 사용자의 정보를 가지고 있는 Context 를 씌워줬으니, 하위에 있는 자식 컴포넌트들에서 authcontext의 데이터를 사용할 수 있음 */}
           {/* AuthContext 는 next-auth에서 제공하는 sesstion provider 를 사용하고 있음 */}
           <header className="order-first sticky top-0 bg-white z-10 border-b">
-            <Header />
+            <div className="max-w-screen-xl mx-auto">
+              <Header />
+            </div>
           </header>
-          <main className="w-full flex  justify-center bg-neutral-50 min-h-full">
+          <main className="w-full flex  justify-center">
             <SWRConfigContext>{children}</SWRConfigContext>
           </main>
           {/* authcontext 내부는 전부 클라이언트 */}

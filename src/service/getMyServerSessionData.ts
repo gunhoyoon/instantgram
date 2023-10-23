@@ -13,7 +13,7 @@ export default async function getMyServerSessionData(
     image: user?.image || "",
     email: user?.email || "",
   };
-  console.log("ㅇㅇ123");
+
   return { data, session };
 }
 //  username 추가한 뒤에 불러왔는데 왜 안들어오는거임?

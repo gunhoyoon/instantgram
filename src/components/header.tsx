@@ -13,7 +13,6 @@ import Avatar from "./Avatar";
 export default function Header() {
   // const [path, setPath] = useState(window.location.pathname);
   const pathname = usePathname();
-  // console.log(pathname);
 
   const { data: session } = useSession();
 
@@ -22,7 +21,7 @@ export default function Header() {
   //   email: string
   //   image: string
   // }, 와 같은 저옵를 담고 있고, 민감한 정보들은 담고 있지 않음 , 'client api'
-  // console.log(session?.user);
+
   const user = session?.user;
   // session?.user :  {name: '윤건호',
   //  email: 'rkdus5964@gmail.com',

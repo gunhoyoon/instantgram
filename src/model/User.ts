@@ -14,3 +14,8 @@ export type DetailUser = User & {
   bookmarks: string[];
 };
 // 정의해놓은 타입 활용 + 나머지 속성들 타입 추가
+
+export type UserSearchResult = User & {
+  following: number;
+  followers: number;
+};

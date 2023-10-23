@@ -37,4 +37,16 @@ export async function getUserByUsername(username: string) {
   );
 }
 
-// console.log 에 user 타입 + username이 같은 데이터가 반환이 안됨
+export async function searchUsers(keyword?: string) {
+  const query = keyword
+    ? `&& (name match "${keyword}") || (username match "${keyword}")`
+    : "";
+  return client.fetch(
+    `*[_type == "user" ${query}]{
+      ...,
+      "following": count(following),
+      "followers": count(followers),
+    }`
+  );
+}
+// 부분 검색도 가능하게

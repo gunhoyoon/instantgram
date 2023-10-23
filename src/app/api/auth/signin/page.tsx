@@ -35,7 +35,6 @@ export default async function SigninPage({
   // 현재 설정한 provider가 google뿐이니 해당 provider가 담고 있는 정보 반환
   // callbackurl은 google cloud에서 client id 발급받기 위해 설정한 url로 반환
   // 해당 providers 를 받아서 화면에 보여주고, 클릭 이벤트를 처리하려면 클라이언트 컴포넌트로 만들어야함
-  console.log(providers, "providers");
   // 해당 providers 를 받아서 사용자에게 ui 를 받아주고 클릭 이벤트도 받고 하려면 클라이언트 컴포넌트가 필요함
   // 그래서 서버 컴포넌트안에 부분적으로 클라이언트를 만들어넣어야함
   return (
