@@ -1,6 +1,6 @@
 "use client";
 import { SimplePost } from "@/model/Post";
-import React from "react";
+import React, { useEffect } from "react";
 import useSWR from "swr";
 import PostListCard from "./PostListCard";
 import GirdSpinner from "./ui/GirdSpinner";
@@ -11,6 +11,17 @@ export default function PostList() {
     error,
     isLoading: loading,
   } = useSWR<SimplePost[]>("/api/posts");
+
+  // const { data, error: isError, isLoading } = useSWR("/api/endpoint/rendom");
+  // console.log(data, "data");
+
+  // const [test, setTest] = React.useState();
+
+  // useEffect(() => {
+  //   fetch("/api/endpoint")
+  //     .then((res) => res.json())
+  //     .then((data) => console.log(data));
+  // }, []);
 
   return (
     <section>
