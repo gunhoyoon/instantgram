@@ -1,18 +1,26 @@
 "use client";
 import Avatar from "@/components/Avatar";
 import GirdSpinner from "@/components/ui/GirdSpinner";
+import useDebounce from "@/hook/useDebounce";
 import { DetailUser, UserSearchResult } from "@/model/User";
 import Link from "next/link";
-import React, { FormEvent, FormEventHandler, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import useSWR from "swr";
 
 export default function UserSearch() {
   const [keyword, setKeyword] = useState("");
+  const debouncedKeyword = useDebounce(keyword);
   const {
     data: users,
-    error,
     isLoading: loading,
-  } = useSWR<UserSearchResult[]>(`/api/search/${keyword}`);
+    error,
+  } = useSWR<UserSearchResult[]>(`/api/search/${debouncedKeyword}`);
+  //   const {
+  //     data: users,
+  //     error,
+  //     isLoading: loading,
+  //   } = useSWR<UserSearchResult[]>(`/api/search/${keyword}`);
+
   console.log(users, "users");
 
   // username , name , image, following , followers
