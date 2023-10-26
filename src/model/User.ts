@@ -15,7 +15,9 @@ export type DetailUser = User & {
 };
 // 정의해놓은 타입 활용 + 나머지 속성들 타입 추가
 
-export type UserSearchResult = User & {
+export type ProfileUser = User & {
   following: number;
   followers: number;
 };
+
+// rename symbol : 을 통해 이름 변경 시 해당 식별자의 이름을 일괄적으로 변경함

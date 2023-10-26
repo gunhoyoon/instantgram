@@ -17,11 +17,11 @@ export default function PostList() {
 
   // const [test, setTest] = React.useState();
 
-  // useEffect(() => {
-  //   fetch("/api/endpoint")
-  //     .then((res) => res.json())
-  //     .then((data) => console.log(data));
-  // }, []);
+  useEffect(() => {
+    fetch(`/api/endpoint`)
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  }, []);
 
   return (
     <section>

@@ -2,19 +2,22 @@
 import Avatar from "@/components/Avatar";
 import GirdSpinner from "@/components/ui/GirdSpinner";
 import useDebounce from "@/hook/useDebounce";
-import { DetailUser, UserSearchResult } from "@/model/User";
+import { DetailUser, ProfileUser } from "@/model/User";
 import Link from "next/link";
 import React, { FormEvent, useEffect, useState } from "react";
 import useSWR from "swr";
+import UserCard from "./UserCard";
 
 export default function UserSearch() {
   const [keyword, setKeyword] = useState("");
   const debouncedKeyword = useDebounce(keyword);
+  // 디바운싱된 결과는 일정 시간동안 keyword 값이 입력 될 때 마다 기존 디바운싱 타이머를 클리어하고 새 타이머발행
+  // 그 값을 debouncedKeyword 에 쏙 전달해줌
   const {
     data: users,
     isLoading: loading,
     error,
-  } = useSWR<UserSearchResult[]>(`/api/search/${debouncedKeyword}`);
+  } = useSWR<ProfileUser[]>(`/api/search/${debouncedKeyword}`);
   //   const {
   //     data: users,
   //     error,
@@ -28,10 +31,10 @@ export default function UserSearch() {
     e.preventDefault();
   };
   return (
-    <section>
-      <form onSubmit={onSubmit}>
+    <section className="w-full max-w-2xl my-4 flex flex-col items-center">
+      <form className="w-full mb-4" onSubmit={onSubmit}>
         <input
-          className="border-none outline-none"
+          className="w-full text-xl p-3 border border-gray-400 outline-none"
           type="text"
           autoFocus
           value={keyword}
@@ -39,34 +42,18 @@ export default function UserSearch() {
           placeholder="Search for a username or name"
         />
       </form>
-      {loading && <GirdSpinner />}
-      {users && (
-        <ul>
-          {users.map((user, index) => (
-            <Link href={`/user/${user.username}`} key={index}>
-              <li className="flex">
-                <div>
-                  <Avatar image={user.image} />
-                </div>
-                <div>
-                  <p>{user.username}</p>
-                  <p>{user.name}</p>
-                  {/* 삼하응로 처리 */}
+      {error && <p>무언가가 잘못 되었음</p>}
 
-                  <span>
-                    {user.followers == null ? "0" : user.followers}
-                    {"followers"}
-                  </span>
-                  <span>
-                    {user.following == null ? "0" : user.following}
-                    {"following"}
-                  </span>
-                </div>
-              </li>
-            </Link>
+      {loading && <GirdSpinner />}
+      {!loading && !error && users?.length === 0 && <p>찾는 사용자가 없음</p>}
+      <ul className="w-full p-4">
+        {users &&
+          users.map((user) => (
+            <li key={user.username} className="flex">
+              <UserCard user={user} />
+            </li>
           ))}
-        </ul>
-      )}
+      </ul>
     </section>
   );
 }
