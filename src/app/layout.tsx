@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import AuthContext from "@/context/AuthContext";
 import SWRConfigContext from "@/context/SWRConfigContext";
+import LoginContext from "@/context/LoginContext";
+import DataContext from "@/context/DataContext";
+// import { useState } from "react";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -29,8 +32,12 @@ export default function RootLayout({
               <Header />
             </div>
           </header>
-          <main className="w-full flex  justify-center">
-            <SWRConfigContext>{children}</SWRConfigContext>
+          <main className="w-full flex justify-center">
+            <DataContext>
+              <LoginContext>
+                <SWRConfigContext>{children}</SWRConfigContext>
+              </LoginContext>
+            </DataContext>
           </main>
           {/* authcontext 내부는 전부 클라이언트 */}
         </AuthContext>
@@ -39,3 +46,4 @@ export default function RootLayout({
     </html>
   );
 }
+// layout 에서 props 으로 전달함 , 각각 a > b > c 를 거치고 c 에서 업데이트

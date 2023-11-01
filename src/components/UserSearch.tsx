@@ -2,7 +2,7 @@
 import Avatar from "@/components/Avatar";
 import GirdSpinner from "@/components/ui/GirdSpinner";
 import useDebounce from "@/hook/useDebounce";
-import { DetailUser, ProfileUser } from "@/model/User";
+import { HomeUser, SearchUser } from "@/model/User";
 import Link from "next/link";
 import React, { FormEvent, useEffect, useState } from "react";
 import useSWR from "swr";
@@ -17,7 +17,7 @@ export default function UserSearch() {
     data: users,
     isLoading: loading,
     error,
-  } = useSWR<ProfileUser[]>(`/api/search/${debouncedKeyword}`);
+  } = useSWR<SearchUser[]>(`/api/search/${debouncedKeyword}`);
   //   const {
   //     data: users,
   //     error,

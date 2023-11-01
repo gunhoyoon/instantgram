@@ -1,10 +1,10 @@
 import React from "react";
 import Avatar from "./Avatar";
-import { User } from "@/model/User";
+import { AuthUser } from "@/model/User";
 import Link from "next/link";
 
 type Props = {
-  user: User;
+  user: AuthUser;
 };
 // 모델링해놓은 user에 대한 타입 자체를 import 해와서 사용할 때, Props 으로 넘겨받은 user에 대한 정의를 해야하는데,
 // 자꾸 Props 자체를 User 타입으로 정의하려고해서 헷갈림

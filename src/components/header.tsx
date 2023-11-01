@@ -10,10 +10,10 @@ import NewFillIcon from "./ui/icons/NewFillIcon";
 import HomeFillIcon from "./ui/icons/HomeFillIcon";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Avatar from "./Avatar";
+import Login from "./ui/icons/Login";
 export default function Header() {
   // const [path, setPath] = useState(window.location.pathname);
   const pathname = usePathname();
-
   const { data: session } = useSession();
 
   // user: {
@@ -42,6 +42,10 @@ export default function Header() {
       icon: <NewIcon />,
       clickedIcon: <NewFillIcon />,
     },
+    // {
+    //   href: "/main3",
+    //   icon: <Login />,
+    // },
   ];
   return (
     <div className="flex justify-between items-center px-6">

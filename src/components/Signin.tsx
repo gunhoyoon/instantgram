@@ -13,6 +13,7 @@ export type Props = {
 export default function Signin({ providers, callbackUrl }: Props) {
   // provider는 기껏해야 우리가 nextauth 설정에 로그인할 provider를 설정한 데이터를 담은 객체임
   // 그 객체 자체를 배열로 반환해주는 Object.values를 거쳐 맵돌려서 뿌려줌
+  console.log(callbackUrl, "callbackUrl");
   return (
     <>
       {Object.values(providers).map(({ id, name }) => (

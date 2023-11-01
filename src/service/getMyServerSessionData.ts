@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { User } from "@/model/User";
+import { AuthUser } from "@/model/User";
 import { NextAuthOptions, getServerSession } from "next-auth";
 
 export default async function getMyServerSessionData(
@@ -7,7 +7,7 @@ export default async function getMyServerSessionData(
 ) {
   const session = await getServerSession(authOptions);
   const user = session?.user;
-  const data: User = {
+  const data: AuthUser = {
     username: user?.username.split("@")[0] || "",
     name: user?.name || "",
     image: user?.image || "",
