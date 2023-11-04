@@ -11,10 +11,11 @@ type LoginStateType = {
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const LoginStateContext = createContext<LoginStateType | undefined>({
+const LoginStateContext = createContext<LoginStateType>({
   isLogin: false,
   setIsLogin: () => {},
 });
+//<LoginStateType | undefined>  해당 타입은 초기값이 확실하게 있는데 undefined 가 나올 수가 없는 타입. 차라리 null은 몰라도
 
 export default function LoginContext({ children }: Props) {
   const [isLogin, setIsLogin] = React.useState(false);

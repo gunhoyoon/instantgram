@@ -21,9 +21,7 @@ export async function getFollowingPostsOf(username: string) {
         || author._ref in *[_type == "user" && username == "${username}"].following[]._ref]
         | order(_createdAt desc){${simplePostProjection}}`
     )
-    .then((posts) =>
-      posts.map((post: SimplePost) => ({ ...post, image: urlFor(post.image) }))
-    );
+    .then(mapPosts);
 }
 
 // join query
@@ -49,5 +47,41 @@ export async function getPost(id: string) {
     .then((post) => ({ ...post, image: urlFor(post.image) }));
 }
 
-// Detail 페이지를 위한 데이터 요청
-// 데이터가 자꾸 undefiend 로 나왔지만 , 결국 중괄호 하나를 닫아주지 않았음
+export async function getPostsOf(username: string) {
+  return client
+    .fetch(
+      `*[_type == "post" && author->username == "${username}"]
+    | order(_createdAt desc){
+      ${simplePostProjection}
+    }`
+    )
+    .then(mapPosts);
+}
+
+export async function getLikedPostsOf(username: string) {
+  return client
+    .fetch(
+      `*[_type == "post" && "${username}" in likes[]->username]
+    | order(_createdAt desc){
+      ${simplePostProjection}
+    }`
+    )
+    .then(mapPosts);
+}
+export async function getSavedPostsOf(username: string) {
+  return client
+    .fetch(
+      `*[_type == "post" && _id in *[_type == "user" && username=="${username}"].bookmarks[]._ref]
+    | order(_createdAt desc){
+      ${simplePostProjection}
+    }`
+    )
+    .then(mapPosts);
+}
+
+function mapPosts(posts: SimplePost[]) {
+  return posts.map((post: SimplePost) => ({
+    ...post,
+    image: urlFor(post.image),
+  }));
+}

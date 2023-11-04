@@ -11,8 +11,7 @@ type Props = {
 export default function FollowButton({ user }: Props) {
   const { username } = user;
   const { data: loggedInUser } = useSWR<HomeUser>("/api/me");
-  console.log(loggedInUser);
-  console.log(username);
+
   const showButton = loggedInUser && loggedInUser.username !== username;
   // 로그인한 사용자가 나의 페이지를 직접 본다면 follow 버튼이 나오면 안됨
   const following =
