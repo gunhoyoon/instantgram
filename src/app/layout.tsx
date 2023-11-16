@@ -6,6 +6,8 @@ import AuthContext from "@/context/AuthContext";
 import SWRConfigContext from "@/context/SWRConfigContext";
 import LoginContext from "@/context/LoginContext";
 import DataContext from "@/context/DataContext";
+import StoreContext from "@/context/StoreContext";
+
 // import { useState } from "react";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
@@ -33,11 +35,13 @@ export default function RootLayout({
             </div>
           </header>
           <main className="w-full flex justify-center">
-            <DataContext>
-              <LoginContext>
-                <SWRConfigContext>{children}</SWRConfigContext>
-              </LoginContext>
-            </DataContext>
+            <StoreContext>
+              <DataContext>
+                <LoginContext>
+                  <SWRConfigContext>{children}</SWRConfigContext>
+                </LoginContext>
+              </DataContext>
+            </StoreContext>
           </main>
           {/* authcontext 내부는 전부 클라이언트 */}
         </AuthContext>

@@ -4,6 +4,9 @@ import SideBar from "@/components/SideBar";
 import getMyServerSessionData from "@/service/getMyServerSessionData";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import CounterContainer from "@/containers/CounterContainer";
+import TodoListContainer from "@/containers/TodoListContainer";
+// import "./exercise";
 
 // Homepage 자체는 SSR 로 렌더링된다. 서버에서 빌드할 때 페이지를 미리 만들어두지 않음, 즉 사용자의 요청이 있을 때마다 페이지를 새로 그린다.
 // 사용자에게 요청이 왔을 때 req 헤더 부분에 사용자의 정보 = 세션이 들어있는지를 확인 함
@@ -28,7 +31,8 @@ export default async function HomePage() {
         <FollowingBar />
         <PostList />
       </div>
-
+      {/* <CounterContainer /> */}
+      {/* <TodoListContainer /> */}
       <div className="basis-1/4 ml-8">
         <SideBar user={session} />
         {/* 100% 사용자의 정보로 움직이는 정적인 페이지 SSG */}
