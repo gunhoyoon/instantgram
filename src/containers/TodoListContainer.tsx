@@ -2,7 +2,7 @@
 
 import AddTodo from "@/components/AddTodo";
 import TodoList from "@/components/TodoList";
-import { addTodo, modifyTodo, removeTodo, toggleTodo } from "@/modules/todos";
+import { addTodo } from "@/modules/todos";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,25 +11,17 @@ export default function TodoListContainer() {
   console.log(todos);
   const dispatch = useDispatch();
 
-  const createTodo = (text: string, done: boolean) =>
-    dispatch(addTodo(text, done));
-  const changeTodo = (text: string) => dispatch(modifyTodo(text));
-
-  const deleteTodo = (id: number) => dispatch(removeTodo(id));
-
-  const toggleCompletionTodo = (id: number) => dispatch(toggleTodo(id));
-  //   console.log(todos, "todostodos");
+  const createTodo = (text: string) => {
+    dispatch(addTodo(text));
+  };
+  // type A = typeof createTodo;
 
   return (
     <div className="flex flex-col">
       <h2 className="font-bold text-3xl">TodoList</h2>
-      <AddTodo addTodo={createTodo} done={false} />
-      <TodoList
-        todos={todos}
-        modifyTodo={changeTodo}
-        removeTodo={deleteTodo}
-        toggleTodo={toggleCompletionTodo}
-      />
+      <AddTodo addTodo={createTodo} />
+      <TodoList todos={todos} />
     </div>
   );
 }
+// 각 메서드 최하단으로 내려보기, 각 역할에 맞ㄱㅔ

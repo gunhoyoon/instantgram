@@ -1,39 +1,25 @@
 "use client";
+import { Todos } from "@/model/type/todos";
 import React, { useState } from "react";
+import TodoItem from "./TodoItem";
 
 type Props = {
-  todos: any;
-  modifyTodo: any;
-  removeTodo: any;
-  toggleTodo: any;
+  todos: Todos;
 };
 
-export default function TodoList({
-  todos,
-  modifyTodo,
-  removeTodo,
-  toggleTodo,
-}: Props) {
+export default function TodoList({ todos }: Props) {
   //   console.log(todos, "todostodos");
-
+  console.log(todos);
   return (
-    <ul className="w-80">
-      {todos.map((todo: any) => (
-        <li key={todo.id} className="flex gap-2">
-          <input type="checkbox" onChange={() => toggleTodo(todo.id)} />
-          <span className={`${todo.done ? "line-through" : ""}`}>
-            {todo.text}
-          </span>
-          <button
-            className={`${todo.done ? "" : "text-gray-500"}`}
-            disabled={todo.done ? false : true}
-            onClick={() => removeTodo(todo.id)}
-          >
-            삭제하기
-          </button>
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className="w-80">
+        {todos.map((todo) => (
+          <li key={todo.id} className="flex gap-2">
+            <TodoItem todo={todo} />
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
 // todo id 가 action.payload.id 와 다르면

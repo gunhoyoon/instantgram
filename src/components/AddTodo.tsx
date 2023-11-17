@@ -2,32 +2,37 @@
 import React, { useState } from "react";
 
 type Props = {
-  addTodo: any;
-  done: boolean;
+  addTodo: (text: string) => void;
 };
 
-export default function AddTodo({ addTodo, done }: Props) {
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+export default function AddTodo({ addTodo }: Props) {
+  const [text, setText] = useState(""); // 배치
+
+  function onSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log("클릭됨");
     console.log(text);
     setText("");
   }
-  function onChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function onChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     setText(e.currentTarget.value);
   }
-  const [text, setText] = useState("");
 
   return (
-    <form className="flex mb-2" onSubmit={onSubmit}>
+    <form className="flex mb-2" onSubmit={onSubmitHandler}>
       <input
         type="text"
         value={text}
-        onChange={onChange}
+        onChange={onChangeHandler}
         placeholder="할 일을 입력하십셔"
         className="outline-none p-2 rounded-lg mr-2"
       />
-      <button onClick={() => addTodo(text, done)}>ADD</button>
+      <button
+        onClick={() => addTodo(text)}
+        disabled={text.length < 1 ? true : false}
+      >
+        ADD
+      </button>
     </form>
   );
 }
