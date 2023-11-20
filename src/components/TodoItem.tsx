@@ -10,6 +10,9 @@ type Props = {
 
 export default function TodoItem({ todo }: Props) {
   const dispatch = useDispatch();
+  const [isEdit, setIsEdit] = useState(false);
+  const [text, setText] = useState("");
+
   const changeTodo = (id: number, text: string) => {
     dispatch(modifyTodo(id, text));
   };
@@ -17,9 +20,6 @@ export default function TodoItem({ todo }: Props) {
   const deleteTodo = (id: number) => dispatch(removeTodo(id));
   // type C = typeof deleteTodo;
   const toggleCompletionTodo = (id: number) => dispatch(toggleTodo(id));
-
-  const [isEdit, setIsEdit] = useState(false);
-  const [text, setText] = useState("");
 
   const EditHandler = () => {
     setIsEdit(true);

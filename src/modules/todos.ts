@@ -56,7 +56,6 @@ export default function todos(state = initialState, action: any) {
 
     // 추가됨
     case MODIFY_TODO:
-      console.log(action, "action");
       // 수정할 원소 찾기
       // 원소 텍스트 변경
       // 반영
@@ -66,6 +65,7 @@ export default function todos(state = initialState, action: any) {
       const modifyTargetIndex = state.findIndex(
         (item) => item.id === action.payload.id
       );
+      // 내가 수정할 요소 선택
 
       if (!state[modifyTargetIndex]) {
         return state;
@@ -78,12 +78,14 @@ export default function todos(state = initialState, action: any) {
       //   // return state;
       // }
       const modifiedItem = {
-        ...state[modifyTargetIndex],
-        text: action.payload.text,
+        ...state[modifyTargetIndex], // 스테이트에서 내가 바꿀 인덱스 찾아서 복사함
+        text: action.payload.text, // 그 찾은 친구 텍스트를 액션으로 넘겨받은 텍스트로 바꿔줄거임
       };
-      // 수정의 대상이 되는 객체를 찾아 얕은 복사를 하고 text의 값을 action.payload.text 로 바꾼걸 {새로운 객체로 감쌈}
-      const newState = [...state];
-      newState.splice(modifyTargetIndex, 1, modifiedItem);
+
+      const newState = [...state]; // 전체 스테이트 복사해서 새로운 변수에 담음
+      newState.splice(modifyTargetIndex, 1, modifiedItem); // 선택한 요소 한개 텍스트 받아온 애랑 바꿔치기 할거임
+
+      // 기존 객체를 변경하는게 아니라 새로운 객체를 만들어 내부 속성을 변경해주고 있음
 
       return newState;
 

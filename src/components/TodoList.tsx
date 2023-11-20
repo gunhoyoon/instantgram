@@ -8,7 +8,6 @@ type Props = {
 };
 
 export default function TodoList({ todos }: Props) {
-  //   console.log(todos, "todostodos");
   console.log(todos);
   return (
     <>

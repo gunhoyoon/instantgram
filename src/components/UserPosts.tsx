@@ -19,19 +19,22 @@ const tabs = [
 
 export default function UserPosts({ user: { username } }: Props) {
   // 어떤 탭이 눌렸냐에 따라 다른 데이터를 가져옴 ,(posts , bookmarks , likes)
-  // /api/users/${username}/posts
-  // /api/users/${username}/liked
-  // /api/users/${username}/bookmarks
 
   const [query, setQuery] = useState(tabs[0].type);
 
   return (
     <section>
-      <ul>
+      <ul className="flex justify-center uppercase ">
         {tabs.map(({ type, icon }) => (
-          <li key={type} onClick={() => setQuery(type)}>
-            <button>{icon}</button>
-            <span>{type}</span>
+          <li
+            className={`mx-12 p-4 cursor-pointer border-black ${
+              type === query && "font-bold border-t"
+            }`}
+            key={type}
+            onClick={() => setQuery(type)}
+          >
+            <button className="scale-150 md:scale-100">{icon}</button>
+            <span className="hidden md:inline">{type}</span>
           </li>
         ))}
       </ul>
