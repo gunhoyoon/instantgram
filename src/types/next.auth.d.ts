@@ -4,6 +4,7 @@ import NextAuth from "next-auth";
 declare module "next-auth" {
   interface Session {
     user: AuthUser;
+
     // user는 기존 defaultsession에 있는 유저 타입을 그대로 가져가면서, username을 추가해주겠다.
   }
 }

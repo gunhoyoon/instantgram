@@ -37,12 +37,13 @@ export const authOptions: AuthOptions = {
     },
     // 서버에서 데이터베이스에 접근 / 데이터 추가 / 삭제 등 할 수 있는게
     // 로그인이 되었을 때,
-    async session({ session }) {
+    async session({ session, token }) {
       const user = session?.user;
       if (user) {
         session.user = {
           ...user,
           username: user.email?.split("@")[0] || "",
+          id: token.id as string,
           // 하지만 기존 user의 정보엔 username 프로퍼티가 없기 때문에 커스텀 타입을 추가해줌
           // {
           //   user: {
@@ -65,6 +66,12 @@ export const authOptions: AuthOptions = {
       //  sign in 이 되고 나서, username이 추가되는 걸 알 수 있음
 
       return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
     },
   },
   pages: {

@@ -9,7 +9,6 @@ type Props = {
 };
 
 const store = createStore(rootReduer, composeWithDevTools());
-// console.log(store.getState());
 export default function StoreContext({ children }: Props) {
   return <Provider store={store}>{children}</Provider>;
 }

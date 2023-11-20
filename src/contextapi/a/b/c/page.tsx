@@ -9,7 +9,6 @@ type Props = {
 export default function Cpage({ value, setValue }: Props) {
   const { value: count, setValue: setCount } = CountValue();
 
-  //   console.log(value);
   console.log("C 페이지 렌더링 되었습니다.");
   function onClickContextAPI() {
     setCount((preValue) => preValue + 1);

@@ -9,8 +9,6 @@ type Props = {
 };
 
 export default function Bpage({ value, setValue }: Props) {
-  //   console.log(value);
-
   //   const data = ConsoleData();
   function onClick() {
     setValue((preValue) => preValue + 1);
