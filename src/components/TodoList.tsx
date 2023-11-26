@@ -8,7 +8,7 @@ type Props = {
 };
 
 export default function TodoList({ todos }: Props) {
-  console.log(todos);
+  // console.log(todos);
   return (
     <>
       <ul className="w-80">

@@ -1,17 +1,22 @@
 "use client";
 import Counter from "@/components/counter";
-import { decrease, increase } from "@/modules/counter";
+import { decreaseAsync, increaseAsync } from "@/modules/counter";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "redux";
+
+type State = { counter: number };
 
 export default function CounterContainer() {
-  const { number } = useSelector((state: any) => ({
-    number: state.counter.number,
-  }));
+  const number = useSelector((state: State) => state.counter);
   const dispatch = useDispatch();
 
-  const onIncrease = (n: number) => dispatch(increase(n));
-  const onDecrease = (n: number) => dispatch(decrease(n));
+  const onIncrease = () => {
+    dispatch(increaseAsync());
+  };
+  const onDecrease = () => {
+    dispatch(decreaseAsync());
+  };
 
   return (
     <Counter number={number} onIncrease={onIncrease} onDecrease={onDecrease} />

@@ -27,7 +27,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "sanity-studio/schemas/pet.js"
+    "sanity-studio/schemas/pet.js",
+    "src/containers/CounterContainer.tsx",
+    "src/components/counter.tsx"
   ],
   "exclude": ["node_modules"]
 }

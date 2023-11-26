@@ -1,3 +1,5 @@
+import { Action, InitType } from "@/model/type/todos";
+
 // 액션 타입
 const ADD_TODO = "ADD_TODO";
 
@@ -6,7 +8,7 @@ const MODIFY_TODO = "MODIFY_TODO";
 const TOGGLE_TODO = "TOGGLE_TODO";
 
 // 액션 생성함수 = 액션만 뽑아주는 역할
-let nextId = 1;
+
 export const addTodo = (text: string) => ({
   type: ADD_TODO,
   payload: {
@@ -34,27 +36,21 @@ export const toggleTodo = (id: number) => ({
 
 // 초기 상태
 
-const initialState = [
-  {
-    id: 1,
-    text: "리덕스를 정복하자",
-    done: false,
-  },
-];
+const initialState: InitType[] = [];
 
 // 리듀서
-
-export default function todos(state = initialState, action: any) {
+let nextId = 0;
+export default function todos(state = initialState, action: Action) {
   switch (action.type) {
     case ADD_TODO:
       return state.concat({
-        id: ++nextId,
-        text: action.payload.text,
-        done: false,
+        id: ++nextId, // 정해져있는
+        text: action?.payload?.text,
+        done: false, // 정해져있는 사용자의 입력이 따로 필요없거나
       });
     // return state.concat(action.payload);
+    // 액션에서 어떠한 연산 X , 페이로드는 필요한 것만 ,
 
-    // 추가됨
     case MODIFY_TODO:
       // 수정할 원소 찾기
       // 원소 텍스트 변경
@@ -95,7 +91,6 @@ export default function todos(state = initialState, action: any) {
       return state.filter((todo) => todo.id !== action.payload.id);
 
     case TOGGLE_TODO:
-      console.log(action, "action");
       return state.map((todo) =>
         todo.id === action.payload.id ? { ...todo, done: !todo.done } : todo
       );

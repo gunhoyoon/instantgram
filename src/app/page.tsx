@@ -28,13 +28,13 @@ export default async function HomePage() {
         {/* 아래 컴포넌트들은 사용자의 정보로만 구성하긴 어려움
         사용자의 정보에 따라 누굴 팔로우했는지 어떤 게시물을 올렸는지 데이터를 받아와야함
         SSR로 할건지 CSR로 할건지,SSR로 한다면 CSR을 어느 부분에 섞어서 사용할건지를 결정  */}
-        <FollowingBar />
-        <PostList />
+        {/* <FollowingBar />
+        <PostList /> */}
       </div>
-      {/* <CounterContainer />
-      <TodoListContainer /> */}
+      <CounterContainer />
+      {/* <TodoListContainer /> */}
       <div className="basis-1/4 ml-8">
-        <SideBar user={session} />
+        {/* <SideBar user={session} /> */}
         {/* 100% 사용자의 정보로 움직이는 정적인 페이지 SSG */}
       </div>
     </section>
@@ -43,5 +43,5 @@ export default async function HomePage() {
 
 // sidebar flex basis 로 영역 나누기
 
-// secion의 전체 width인 850px의 3/4 영역 , 1/4 영역 차지
+// section의 전체 width인 850px의 3/4 영역 , 1/4 영역 차지
 // 레벨을 나눠서 flex 줬을 때, 영역이 sidebar와 갈리게

@@ -10,6 +10,7 @@ type Props = {
 
 export default function TodoItem({ todo }: Props) {
   const dispatch = useDispatch();
+
   const [isEdit, setIsEdit] = useState(false);
   const [text, setText] = useState("");
 
@@ -21,16 +22,17 @@ export default function TodoItem({ todo }: Props) {
   // type C = typeof deleteTodo;
   const toggleCompletionTodo = (id: number) => dispatch(toggleTodo(id));
 
-  const EditHandler = () => {
-    setIsEdit(true);
-  };
-  const CancleEdit = () => {
-    setIsEdit(false);
-  };
-  const changeTodoHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const EditHandler = () => setIsEdit(true);
+
+  const CancleEdit = () => setIsEdit(false);
+
+  const changeTodoHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
     setText(e.target.value);
-  };
   const EditDone = () => {
+    if (text.length <= 0) {
+      alert("수정할 내용을 입력해주세요");
+      return;
+    }
     changeTodo(todo.id, text);
     setIsEdit(false);
   };

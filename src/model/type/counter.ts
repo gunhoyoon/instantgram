@@ -1,0 +1,3 @@
+type CounterAction = {
+  type: string;
+};

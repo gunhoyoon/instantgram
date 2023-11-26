@@ -1,17 +1,20 @@
 "use client";
+import { addTodo } from "@/modules/todos";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
-type Props = {
-  addTodo: (text: string) => void;
-};
-
-export default function AddTodo({ addTodo }: Props) {
+export default function AddTodo() {
   const [text, setText] = useState(""); // 배치
+  const dispatch = useDispatch();
+
+  const createTodo: (text: string) => void = (text: string) => {
+    dispatch(addTodo(text));
+  };
 
   function onSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("클릭됨");
-    console.log(text);
+    // console.log("클릭됨");
+    // console.log(text);
     setText("");
   }
   function onChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
@@ -28,7 +31,8 @@ export default function AddTodo({ addTodo }: Props) {
         className="outline-none p-2 rounded-lg mr-2"
       />
       <button
-        onClick={() => addTodo(text)}
+        onClick={() => createTodo(text)}
+        // 액션이 디스패치된 모습
         disabled={text.length < 1 ? true : false}
       >
         ADD
