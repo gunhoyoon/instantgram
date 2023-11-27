@@ -75,6 +75,7 @@ export async function getSavedPostsOf(username: string) {
 function mapPosts(posts: SimplePost[]) {
   return posts.map((post: SimplePost) => ({
     ...post,
+    likes: post.likes ?? [], /// post 의 likes 가 없다면 빈 배열로 설정
     image: urlFor(post.image),
   }));
 }
@@ -88,7 +89,7 @@ function mapPosts(posts: SimplePost[]) {
 // 요약 => 내 게시물 + 내가 팔로잉한 사람들 게시물 가져오고 싶음
 // SimplePost 를 위한 데이터 요청
 
-export async function LikePost(postId: string, userId: string) {
+export async function likePost(postId: string, userId: string) {
   return client
     .patch(postId) // patch 를 할 포스트의 id, 그니까 그 아이디가 가지고 있는 포스트의 어떤 속성을 패치(수정)할거임
     .setIfMissing({ likes: [] }) // 만약 likes 가 없으면 빈 배열로 설정 , 있을 시 무시되는거 같음
@@ -104,6 +105,6 @@ export async function LikePost(postId: string, userId: string) {
 export async function dislikePost(postId: string, userId: string) {
   return client
     .patch(postId) //
-    .unset([`likes==[_ref=="${userId}"]`]) // likes의 ref에 해당 userid가 있다면 그걸 빼줘
+    .unset([`likes[_ref=="${userId}"]`]) // likes의 ref에 해당 userid가 있다면 그걸 빼줘
     .commit();
 }

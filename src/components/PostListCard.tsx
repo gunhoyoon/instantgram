@@ -31,12 +31,7 @@ export default function PostListCard({ post, priority = false }: Props) {
         priority={priority}
         onClick={() => setIsOpenModal(true)}
       />
-      <ActionBar
-        likes={likes}
-        text={text}
-        createdAt={createdAt}
-        username={username}
-      />
+      <ActionBar post={post} />
       <CommentForm />
       {isOpenModal && (
         <ModalPortal>

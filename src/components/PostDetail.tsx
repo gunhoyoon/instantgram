@@ -60,7 +60,7 @@ export default function PostDetail({ post }: Props) {
               )
             )}
         </ul>
-        <ActionBar likes={likes} username={username} createdAt={createdAt} />
+        <ActionBar post={post} />
         {/* actionBar의 text는 별개로 만들어줄거라서 지금 한번에 전달해주지 않을거임
         그로 인해 ActionBar 에서 옵셔널 처리했고, text가 전달되지 않았을 경우에 보여주지 않고
         전달됐을때만 보내주게 구현함 */}
