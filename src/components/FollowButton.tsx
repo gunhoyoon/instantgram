@@ -1,8 +1,8 @@
 "use client";
-import { HomeUser, ProfileUser } from "@/model/User";
+import { ProfileUser } from "@/model/User";
 import React from "react";
-import useSWR from "swr";
 import Button from "./ui/Button";
+import useMe from "@/hook/useMe";
 
 type Props = {
   user: ProfileUser;
@@ -10,7 +10,7 @@ type Props = {
 
 export default function FollowButton({ user }: Props) {
   const { username } = user;
-  const { data: loggedInUser } = useSWR<HomeUser>("/api/me");
+  const { user: loggedInUser } = useMe();
 
   const showButton = loggedInUser && loggedInUser.username !== username;
   // 로그인한 사용자가 나의 페이지를 직접 본다면 follow 버튼이 나오면 안됨

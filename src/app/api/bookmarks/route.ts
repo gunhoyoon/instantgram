@@ -2,6 +2,7 @@ import { likePost, dislikePost } from "@/service/posts";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
+import { addBookmark, removeBookmark } from "@/service/user";
 
 export async function PUT(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -12,15 +13,15 @@ export async function PUT(req: NextRequest) {
     return new Response("Authentication Error", { status: 401 });
   }
 
-  const { id, like } = await req.json();
+  const { id, bookmark } = await req.json();
 
-  if (!id || like === undefined) {
+  if (!id || bookmark === undefined) {
     return new Response("Bad Request", { status: 400 });
   }
 
-  const request = like ? likePost : dislikePost;
+  const request = bookmark ? addBookmark : removeBookmark;
 
-  return request(id, user.id) //
+  return request(user.id, id) //
     .then((res) => NextResponse.json(res))
     .catch((error) => new Response(JSON.stringify(error), { status: 500 }));
 }

@@ -8,7 +8,6 @@ async function updateLike(id: string, like: boolean) {
     body: JSON.stringify({ id, like }),
   }).then((res) => res.json());
 } // likes 에 관한 데이터를 결국 mutate를 사용해서 옵티미스틱 UI 업데이트를 해줘야하는데 해당 경로는 fetch 로 통신하기떄문에 mutate를 사용할 수 없음
-console.log(updateLike, "updateLike");
 
 export default function usePosts() {
   const {
@@ -43,7 +42,7 @@ export default function usePosts() {
     // console.log(newPosts);
     return mutate(updateLike(post.id, like), {
       optimisticData: newPosts,
-      populateCache: false, // 백앤드에 요청이 완료되면 전달되는프로미스 데이터를 클라이언트에서 캐시하지 않겠다. 왜냐면 클라이언트에서 만들어둔 데이터와 서버 요청시 받아오는 데이터가 동일할거기 때문에, 우리 앞서서 데이터를 수정해둔거라 항상 최신일 것임
+      populateCache: false, // 백앤드에 요청이 완료되면 전달되는프로미스 데이터를 클라이언트에서 캐시하지 않겠다. 왜냐면 클라이언트에서 만들어둔 데이터와 서버 요청시 받아오는 데이터가 동일할거기 때문에, 우리 앞서서 데이터를 수정해둔거라 항상 최신일 것임, 여기서 반환된 값을 사용하지 않겠다.
       revalidate: false, // 우린 이미 데이터를 알고있음 , 그래서 백앤드에 다시 요청할 필요가 없음
       rollbackOnError: true, // 혹시 like 를 처리하면서 에러가 발생한다면 rollback 할 수 있도록 true 로 설정
     }); // 해당 옵션을 /api/likes 의 요청이 처리되기전에 ui 가 먼저 업데이트가 되므로 UX가 개선이 됨.

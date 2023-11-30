@@ -21,7 +21,7 @@ export default {
       of: [
         {
           type: 'reference',
-          to: [{type: 'user'}],
+          to: [{type: 'user'}], // user ID 를 배열로 가지고 있음
         },
       ],
       validation: (Rule) => Rule.unique(),

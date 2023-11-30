@@ -33,7 +33,7 @@ export async function getUserByUsername(username: string) {
       "id" : _id,
       following[]->{username, image},
       followers[]->{username, image},
-      "bookmarks":bookmarks[]-> id
+      "bookmarks":bookmarks[]->_id
     }`
   );
 }
@@ -78,4 +78,24 @@ export async function getUserForProfile(username: string) {
       followers: user.followers ?? 0,
       posts: user.posts ?? 0,
     }));
+}
+
+export async function addBookmark(userId: string, postId: string) {
+  return client
+    .patch(userId) // patch 를 할 포스트의 id, 그니까 그 아이디가 가지고 있는 포스트의 어떤 속성을 패치(수정)할거임
+    .setIfMissing({ bookmarks: [] }) // 만약 북마크 가 없으면 빈 배열로 설정 , 있을 시 무시되는거 같음
+    .append("bookmarks", [
+      {
+        _ref: postId,
+        _type: "reference",
+      },
+    ]) // 추가를 하고자하는 배열의 키는 북마크 이고, 해당 배열의 속성은 이러이러하다
+    .commit({ autoGenerateArrayKeys: true }); // 커밋 시 고유의 아이디를 생성해줘
+}
+
+export async function removeBookmark(userId: string, postId: string) {
+  return client
+    .patch(userId) //
+    .unset([`bookmarks[_ref=="${postId}"]`])
+    .commit();
 }

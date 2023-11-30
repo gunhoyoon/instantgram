@@ -61,13 +61,25 @@ export async function getLikedPostsOf(username: string) {
     )
     .then(mapPosts);
 }
+// export async function getSavedPostsOf(username: string) {
+//   return client
+//     .fetch(
+//       `*[_type == "post" && _id in *[_type == "user" && username=="${username}"].bookmarks[]._ref ]
+//     | order(_createdAt desc){
+//       ${simplePostProjection}
+//     }`
+//     )
+//     .then(mapPosts);
+// }
 export async function getSavedPostsOf(username: string) {
   return client
     .fetch(
-      `*[_type == "post" && _id in *[_type == "user" && username=="${username}"].bookmarks[]._ref ]
-    | order(_createdAt desc){
-      ${simplePostProjection}
-    }`
+      `*[_type == "post" && _id in *[_type=="user" && username=="${username}"].bookmarks[]._ref]
+      | order(_createdAt desc) {
+        ${simplePostProjection}
+      }`,
+      undefined,
+      { cache: "no-store" }
     )
     .then(mapPosts);
 }
