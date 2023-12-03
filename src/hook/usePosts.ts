@@ -16,6 +16,7 @@ export default function usePosts() {
     error,
     mutate,
   } = useSWR<SimplePost[]>("/api/posts");
+  // simplepost comments: number 타입, 코맨트의 개수 자체는 number 로 표기 , 목록을 보여줌에 있어서는 string[]
   // 불필요한 요청 ,불필요한 렌더링 감소
   // SWR 로 통신하고 있는 /api/posts 의 mutate를 사용하게 되면 지금은 '/api/posts' 의 바운드된 데이터를 가지고 있지만,
   // mutate의 함수를 사용해서 첫번째 인자에 패치된 데이터를 넣어주면, 첫번째 인자의 데이터로 덮어씌워준다 mutate에, 그래서 /api/likes 에 관한 데이터를

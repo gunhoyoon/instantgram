@@ -12,9 +12,10 @@ import useMe from "@/hook/useMe";
 
 type Props = {
   post: SimplePost;
+  children?: React.ReactNode;
 };
 
-export default function ActionBar({ post }: Props) {
+export default function ActionBar({ post, children }: Props) {
   const { id, likes, username, text, createdAt } = post;
   const { user, setBookmark } = useMe();
   // console.log(user, " user");
@@ -23,11 +24,11 @@ export default function ActionBar({ post }: Props) {
 
   const liked = user ? likes.includes(user.username) : false;
   const bookmarked = user?.bookmarks?.includes(id) ?? false;
-  console.log(user, "user");
+  // console.log(user, "user");
 
   // user 에 관한 값은 있고 북마크도 배열 형태긴한데 안에 내용이 전부 null로 들어옴
   // 북마크의 값이 지금 전부 null 로 들어옴
-  console.log(bookmarked, "bookmarked");
+  // console.log(bookmarked, "bookmarked");
 
   // 그래서 좋아요 버튼의 상태를 해당 컴포넌트에 의존해서 사용하는것이 아니라 전달받은 like 를 사용자가 좋아했는지에 대한 데이터를 가지고 업데이트 해줄거임
   // 버튼을 클릭할 시 api요청 > 데이터 변경 > 업뎃 > toggle 버튼의 liked 값도 변경이 될 수 있게 해당 버튼을 업데이트 해줄거임
@@ -38,7 +39,6 @@ export default function ActionBar({ post }: Props) {
     user && setLike(post, user.username, like);
   };
   const handleBookmark = (bookmark: boolean) => {
-    // console.log(bookmark, "cli bookmark");
     user && setBookmark(id, bookmark);
   };
 
@@ -66,12 +66,7 @@ export default function ActionBar({ post }: Props) {
         <p className="text-sm font-bold mb-2">{`${likes?.length ?? 0} ${
           likes?.length > 1 ? "likes" : "like"
         }`}</p>
-        {text && (
-          <p>
-            <span className="font-bold mr-1">{username}</span>
-            {text}
-          </p>
-        )}
+        {children}
         <p className="text-xs text-neutral-500 uppercase my-2">
           {parseDate(createdAt)}
         </p>

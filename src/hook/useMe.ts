@@ -10,11 +10,11 @@ async function updateBookmark(postId: string, bookmark: boolean) {
 // 유저 개인의 정보를 업데이트 시켜주는거라서 posts 를 업데이트 할 필요가 없음
 export default function useMe() {
   const { data: user, isLoading, error, mutate } = useSWR<HomeUser>("/api/me");
-  console.log(user, "user");
+  // console.log(user, "user");
   const setBookmark = (postId: string, bookmark: boolean) => {
-    console.log(postId, bookmark);
+    // console.log(postId, bookmark);
     if (!user) return;
-    const bookmarks = user?.bookmarks ?? [];
+    const bookmarks = user?.bookmarks;
     // console.log(bookmarks, "bookmarks");
     const newUser = {
       ...user,
@@ -22,10 +22,10 @@ export default function useMe() {
         ? [...bookmarks, postId]
         : bookmarks.filter((b) => b !== postId),
     };
-    console.log(newUser, "newUser");
+    // console.log(newUser, "newUser");
 
     return mutate(updateBookmark(postId, bookmark), {
-      optimisticData: newUser,
+      optimisticData: newUser, // 업데이트된 유저정보만 보여주면 됨
       populateCache: false,
       revalidate: false,
       rollbackOnError: true,

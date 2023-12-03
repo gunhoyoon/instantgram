@@ -99,3 +99,4 @@ export async function removeBookmark(userId: string, postId: string) {
     .unset([`bookmarks[_ref=="${postId}"]`])
     .commit();
 }
+// 여기서 서비스 로직이라 함은 상황에 맞는
