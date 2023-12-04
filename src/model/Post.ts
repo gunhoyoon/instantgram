@@ -1,7 +1,7 @@
 export type Comment = {
   comment: string;
   username: string;
-  image: string;
+  image?: string | undefined;
 };
 // 코멘트에 필요한 데이터를 또 별개의 인터페이스 사용
 

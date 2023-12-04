@@ -5,17 +5,19 @@ import { parseDate } from "@/util/date";
 import ToggleButton from "./ui/ToggleButton";
 import HeartFillIcon from "./ui/icons/HeartFillIcon";
 import BookmarkFillIcon from "./ui/icons/BookmarkFillIcon";
-import { SimplePost } from "@/model/Post";
+import { Comment, SimplePost } from "@/model/Post";
 
 import usePosts from "@/hook/usePosts";
 import useMe from "@/hook/useMe";
+import CommentForm from "./CommentForm";
 
 type Props = {
   post: SimplePost;
   children?: React.ReactNode;
+  onComment: (comment: Comment) => void;
 };
 
-export default function ActionBar({ post, children }: Props) {
+export default function ActionBar({ post, children, onComment }: Props) {
   const { id, likes, username, text, createdAt } = post;
   const { user, setBookmark } = useMe();
   // console.log(user, " user");
@@ -40,6 +42,9 @@ export default function ActionBar({ post, children }: Props) {
   };
   const handleBookmark = (bookmark: boolean) => {
     user && setBookmark(id, bookmark);
+  };
+  const handleComment = (comment: string) => {
+    user && onComment({ comment, username: user.username, image: user.image });
   };
 
   // nextjs 에서 제공하는 fetch api 의 경우 캐시에 대한 옵션을 직접 설정할 수 있는데, 기본값은 캐시를 하게 되어있음
@@ -70,6 +75,7 @@ export default function ActionBar({ post, children }: Props) {
         <p className="text-xs text-neutral-500 uppercase my-2">
           {parseDate(createdAt)}
         </p>
+        <CommentForm onPostComment={handleComment} />
       </div>
     </>
   );

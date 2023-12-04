@@ -1,4 +1,4 @@
-import { SimplePost } from "@/model/Post";
+import { Comment, SimplePost } from "@/model/Post";
 import useSWR from "swr";
 //
 // 함수 역할 분배
@@ -7,7 +7,15 @@ async function updateLike(id: string, like: boolean) {
     method: "PUT",
     body: JSON.stringify({ id, like }),
   }).then((res) => res.json());
-} // likes 에 관한 데이터를 결국 mutate를 사용해서 옵티미스틱 UI 업데이트를 해줘야하는데 해당 경로는 fetch 로 통신하기떄문에 mutate를 사용할 수 없음
+}
+// likes 에 관한 데이터를 결국 mutate를 사용해서 옵티미스틱 UI 업데이트를 해줘야하는데 해당 경로는 fetch 로 통신하기떄문에 mutate를 사용할 수 없음
+
+async function addComment(id: string, comment: string) {
+  return fetch("/api/comments", {
+    method: "POST",
+    body: JSON.stringify({ id, comment }),
+  }).then((res) => res.json());
+}
 
 export default function usePosts() {
   const {
@@ -47,9 +55,25 @@ export default function usePosts() {
       revalidate: false, // 우린 이미 데이터를 알고있음 , 그래서 백앤드에 다시 요청할 필요가 없음
       rollbackOnError: true, // 혹시 like 를 처리하면서 에러가 발생한다면 rollback 할 수 있도록 true 로 설정
     }); // 해당 옵션을 /api/likes 의 요청이 처리되기전에 ui 가 먼저 업데이트가 되므로 UX가 개선이 됨.
-    // 누를때마다 요청이 가는건 어쩔 수 없는 거 같은데, 네이버 지식인으로 라이크를 계속 눌러보니 alert 창으로 메시지가 뜨거나, 자동입력방지? 메이플 거탐같은게 뜸
   };
-  return { posts, isLoading, error, setLike };
+
+  const postComment = (post: SimplePost, comment: Comment) => {
+    // console.log(post, comment, "post , comment");
+    const newPost = {
+      ...post,
+      comments: post.comments + 1,
+    };
+    const newPosts = posts?.map((p) => (p.id === post.id ? newPost : p));
+
+    //  뮤테이트를 해당 경로 들고 찌르면서 post 업데이트함
+    return mutate(addComment(post.id, comment.comment), {
+      optimisticData: newPosts,
+      populateCache: false,
+      revalidate: false,
+      rollbackOnError: true,
+    });
+  };
+  return { posts, isLoading, error, setLike, postComment };
 }
 
 // import { SimplePost } from "@/model/Post";
