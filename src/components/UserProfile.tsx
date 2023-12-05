@@ -1,12 +1,10 @@
 import { ProfileUser } from "@/model/User";
-import React from "react";
 import Avatar from "./Avatar";
 import FollowButton from "./FollowButton";
 
 type Props = {
   user: ProfileUser;
 };
-
 export default function UserProfile({ user }: Props) {
   const { image, username, name, followers, following, posts } = user;
   const info = [

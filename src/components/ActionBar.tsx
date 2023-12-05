@@ -19,8 +19,8 @@ type Props = {
 
 export default function ActionBar({ post, children, onComment }: Props) {
   const { id, likes, username, text, createdAt } = post;
+
   const { user, setBookmark } = useMe();
-  // console.log(user, " user");
   const { setLike } = usePosts(); // 해당 컴포넌트에서 자체적으로 좋아요에 관한 데이터 수정하고 모든 api/posts 키를 사용하는 쪽을 리벨리데이트, 업데이트 시켜줬는데
   // 버튼 자체를 좋아요 누른 사람만 가능하니 로그인이 되어있는 사용자가 있는지 확인
 
