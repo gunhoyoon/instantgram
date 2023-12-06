@@ -39,7 +39,7 @@ export default function PostDetail({ post }: Props) {
     <section className="flex w-full h-full">
       <div className="relative basis-3/5">
         <Image
-          className="   object-cover"
+          className="object-cover"
           src={image}
           alt={`photo by ${username}`}
           priority

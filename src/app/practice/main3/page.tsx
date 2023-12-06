@@ -13,8 +13,8 @@ export default function MainTestPage() {
 
   useEffect(() => {
     if (data?.isLogin === false) {
-      console.log(`/new/login?callbackUrl=${path}`);
-      route.push(`/new/login?callbackUrl=/${path}`);
+      console.log(`/practice/login?callbackUrl=${path}`);
+      route.push(`/practice/login?callbackUrl=/${path}`);
     }
   }, []);
 

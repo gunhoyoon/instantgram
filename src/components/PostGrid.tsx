@@ -1,24 +1,19 @@
 import React from "react";
-import useSWR from "swr";
 import GirdSpinner from "./ui/GirdSpinner";
-import { SimplePost } from "@/model/Post";
 import PostGridCard from "./PostGridCard";
+import usePosts from "@/hook/usePosts";
 
-type Props = {
-  username: string;
-  query: string;
-};
-export default function PostGrid({ username, query }: Props) {
-  const {
-    data: posts,
+export default function PostGrid() {
+  const { posts, isLoading } = usePosts();
+  console.log(usePosts, "usePosts");
 
-    error,
-  } = useSWR<SimplePost[]>(`/api/users/${username}/${query}`);
+  // console.log(posts, "PostGrid");
 
   return (
     <div className="w-full text-center">
       <ul className="grid grid-cols-3 gap-4 py-4 px-8">
         {/* 그리드 = 열 / 행으로 표현 시 주로 사용 */}
+        {isLoading && <GirdSpinner />}
         {posts &&
           posts.map((post, index) => (
             <li key={post.id}>

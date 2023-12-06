@@ -1,3 +1,4 @@
+import { useCacheKeys } from "./../context/CacheKeysContext";
 import { Comment, SimplePost } from "@/model/Post";
 import { useCallback } from "react";
 import useSWR from "swr";
@@ -19,12 +20,24 @@ async function addComment(id: string, comment: string) {
 }
 
 export default function usePosts() {
+  const cacheKeys = useCacheKeys();
+  console.log(cacheKeys.postsKeys, "cacheKey");
+  // 해당 훅을 사용할 때 cacheKey 라는 스트링 타입의 경로를 받을 것. 아무것도 넘겨주지 않을 경우에 기본 값은 "/api/posts"
+  // 여기서 user/username/query를 캐시키로 사용하게 되면 posts 커스텀 훅에서 제공해주는 posts 를 사용할거고,
+  // user/username/query 해당 캐시키를 사용하는 데이터가 업데이트가 될 것임
   const {
     data: posts,
     isLoading,
     error,
     mutate,
-  } = useSWR<SimplePost[]>("/api/posts");
+  } = useSWR<SimplePost[]>(cacheKeys.postsKeys);
+  // useSWR이 키값으로 캐싱하고 있던 값 기본 : api/posts
+  // cacheKeysProvider 를 통해 들어온 값이 기존에 user/${username}/${query} 값이었음
+  // 유저에 대한 페이지는 user/${username}/${query} 를 통해 보여지게 되어있음. 해당 키값으로 받은 posts 를 보여주고,
+  // 메인 페이지에서 리스트형태로 나오는 포스트들은 api/posts 로 받아오고 있음.
+  // 그래서 유저의 개인 페이지에서 좋아요를 눌렀을 때 전체 포스트의 게시물이 반영이 안됨.
+  // 그래서 원래 usePosts 훅 에선 api/posts를 고정으로 사용했지만, 개인페이지에 한해 user/${username}/${query} 를 요청하게 됨
+
   // simplepost comments: number 타입, 코맨트의 개수 자체는 number 로 표기 , 목록을 보여줌에 있어서는 string[]
   // 불필요한 요청 ,불필요한 렌더링 감소
   // SWR 로 통신하고 있는 /api/posts 의 mutate를 사용하게 되면 지금은 '/api/posts' 의 바운드된 데이터를 가지고 있지만,

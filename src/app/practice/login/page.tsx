@@ -21,10 +21,10 @@ export default function LoginPage() {
     console.log(callbackUrlCase, "callbackUrlCas");
 
     if (callbackUrlCase) {
-      router.push(`/new/${callbackUrl}`);
+      router.push(`/practice/${callbackUrl}`);
     } else {
       // console.log(data?.isLogin);
-      router.push(`/new`);
+      router.push(`/practice`);
     }
   };
 

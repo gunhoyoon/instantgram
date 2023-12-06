@@ -6,6 +6,7 @@ import PostIcon from "./ui/icons/PostIcon";
 import BookmarkIcon from "./ui/icons/BookmarkIcon";
 import HeartIcon from "./ui/icons/HeartIcon";
 import PostGrid from "./PostGrid";
+import { CacheKeysContext } from "@/context/CacheKeysContext";
 
 type Props = {
   user: ProfileUser;
@@ -38,7 +39,15 @@ export default function UserPosts({ user: { username } }: Props) {
           </li>
         ))}
       </ul>
-      <PostGrid username={username} query={query} />
+      <CacheKeysContext.Provider
+        // 기본적인 postsKeys 는 api/posts 로 설정되어있고, Provider 로 감싸주고 value 자체로 다른 postsKeys 를 넘겨주지 않는 이상
+        // postsKeys는 api/posts 가 될 것임 , PostGrid 의 경우 해당
+        // 해당 컨텍스트로 감싸준 컴포넌트들은 postsKeys 값을 `/api/users/${username}/${query}` 얘로 전달받을거임
+        // 기본은 api/posts
+        value={{ postsKeys: `/api/users/${username}/${query}` }}
+      >
+        <PostGrid />
+      </CacheKeysContext.Provider>
     </section>
   );
 }
