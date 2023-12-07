@@ -1,5 +1,5 @@
 import { SimplePost } from "@/model/Post";
-import { client, urlFor } from "./sanity";
+import { assetsURL, client, urlFor } from "./sanity";
 
 const simplePostProjection = `
 ...,
@@ -139,4 +139,35 @@ export async function addComment(
       },
     ])
     .commit({ autoGenerateArrayKeys: true });
+}
+
+export async function createPost(userId: string, text: string, file: Blob) {
+  console.log(userId, text, file);
+
+  return fetch(assetsURL, {
+    method: "POST",
+    headers: {
+      "content-type": file.type,
+      authorization: `Bearer ${process.env.SANITY_SECRET_TOKEN}`,
+    },
+    body: file,
+  })
+    .then((res) => res.json())
+    .then((result) => {
+      return client.create(
+        {
+          _type: "post",
+          author: { _ref: userId },
+          photo: { asset: { _ref: result.document._id } },
+          comments: [
+            {
+              comment: text,
+              author: { _ref: userId, _type: "reference" },
+            },
+          ],
+          likes: [],
+        },
+        { autoGenerateArrayKeys: true }
+      );
+    });
 }

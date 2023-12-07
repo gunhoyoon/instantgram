@@ -7,6 +7,9 @@ export const client = createClient({
   useCdn: false,
   apiVersion: "2023-05-03",
   token: process.env.SANITY_SECRET_TOKEN,
+  fetch: {
+    cache: "no-store",
+  },
 });
 // 여기서 client 를 생성하지만, 다른 파일에서 import 한 채 원하는 기능들을 사용할거고, 이 한 곳에서 모든 서비스 로직을 작성해가진 않을겅밈
 // sanity의 클라이언트를 생성, 클라이언트를 이용해 Sanity의 데이터를 읽고 쓸 수 있음
@@ -22,3 +25,5 @@ export function urlFor(source: SanityImageSource) {
 // image 에 대한 값을 정의할 때 photo자체를 그대로 할당해서 우리가 원하는 url 의 형태로 오지 않음.
 // photo.url  이런식으로 image 를 정의할수도 있지만 그렇게되면 이미지가 최적화되지 않은채로 오기 때문에,
 // sanity에서 추천한 방식으로 최적화 한 뒤, url사용
+
+export const assetsURL = `https://${process.env.SANITY_PROJECT_ID}.api.sanity.io/v2021-03-25/assets/images/${process.env.SANITY_DATASET}`;
