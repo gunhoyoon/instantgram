@@ -31,5 +31,5 @@
     "src/containers/CounterContainer.tsx",
     "src/components/counter.tsx"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "sanity-studio"]
 }

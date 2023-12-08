@@ -51,3 +51,7 @@ export default function UserPosts({ user: { username } }: Props) {
     </section>
   );
 }
+// 프로바이더를 거쳐 포스트 그리드로 넘어감
+// 캐시에 대한 기존 밸류 변경
+// 여기서 벨류를 바뀜
+// api/posts에서 앤드포인트가 달라짐.

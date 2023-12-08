@@ -21,7 +21,7 @@ async function addComment(id: string, comment: string) {
 
 export default function usePosts() {
   const cacheKeys = useCacheKeys();
-  // console.log(cacheKeys.postsKeys, "cacheKey");
+  console.log(cacheKeys.postsKeys, "cacheKey");
   // 해당 훅을 사용할 때 cacheKey 라는 스트링 타입의 경로를 받을 것. 아무것도 넘겨주지 않을 경우에 기본 값은 "/api/posts"
   // 여기서 user/username/query를 캐시키로 사용하게 되면 posts 커스텀 훅에서 제공해주는 posts 를 사용할거고,
   // user/username/query 해당 캐시키를 사용하는 데이터가 업데이트가 될 것임
@@ -31,6 +31,11 @@ export default function usePosts() {
     error,
     mutate,
   } = useSWR<SimplePost[]>(cacheKeys.postsKeys);
+  // ***캐시값 바뀌면 데이터 패칭이 다시 일어난다.*** ,
+  // 기본값으로 설정한 친구는 지가 가지고 있는 키값으로 열일중
+  // 상세 페이지 친구를 통하려면 프로바이더를 통한 키값이 계속 들어옴
+  // 다른 엔드포인트 사용인데 , 같은 리소스를 다룰 때 , 캐시를 하나로 바라보게함. 프로바이더든 뭐든 통해서.
+  // 콘솔 찍어보면서 velog에 내 언어로 정리. ++
   // useSWR이 키값으로 캐싱하고 있던 값 기본 : api/posts
   // cacheKeysProvider 를 통해 들어온 값이 기존에 user/${username}/${query} 값이었음
   // 유저에 대한 페이지는 user/${username}/${query} 를 통해 보여지게 되어있음. 해당 키값으로 받은 posts 를 보여주고,
