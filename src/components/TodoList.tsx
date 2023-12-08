@@ -1,6 +1,6 @@
 "use client";
 import { Todos } from "@/model/type/todos";
-import React, { useState } from "react";
+import React from "react";
 import TodoItem from "./TodoItem";
 
 type Props = {

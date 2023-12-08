@@ -1,9 +1,7 @@
 "use client";
 import React from "react";
-import useSWR from "swr";
 import Avatar from "./Avatar";
 import ScrollableBar from "./ui/ScrollableBar";
-import { HomeUser } from "@/model/User";
 import { PropagateLoader } from "react-spinners";
 import Link from "next/link";
 import useMe from "@/hook/useMe";
@@ -18,7 +16,7 @@ import useMe from "@/hook/useMe";
 
 // 클라이언트 컴포넌트 비동기 요소(async , await) X
 export default function FollowingBar() {
-  const { user, error, isLoading } = useMe();
+  const { user, isLoading } = useMe();
   // api/me에 정의해놓은 data 를 가지고 올거고 해당 데이터의 타입은 DetailUser야. 이렇게하면 자동완성이 됨. 우리 코드도 예상이 가능해짐
   // 타입으로 인해 예상이 가능해짐
 

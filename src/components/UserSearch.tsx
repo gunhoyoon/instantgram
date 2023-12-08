@@ -2,9 +2,8 @@
 import Avatar from "@/components/Avatar";
 import GirdSpinner from "@/components/ui/GirdSpinner";
 import useDebounce from "@/hook/useDebounce";
-import { HomeUser, SearchUser } from "@/model/User";
-import Link from "next/link";
-import React, { FormEvent, useEffect, useState } from "react";
+import { SearchUser } from "@/model/User";
+import React, { FormEvent, useState } from "react";
 import useSWR from "swr";
 import UserCard from "./UserCard";
 

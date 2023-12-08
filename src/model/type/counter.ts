@@ -1,3 +1,0 @@
-type CounterAction = {
-  type: string;
-};

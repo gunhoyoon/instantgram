@@ -8,6 +8,7 @@ export default async function getMyServerSessionData(
   const session = await getServerSession(authOptions);
   const user = session?.user;
   const data: AuthUser = {
+    id: user?.id || "",
     username: user?.username.split("@")[0] || "",
     name: user?.name || "",
     image: user?.image || "",

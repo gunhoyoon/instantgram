@@ -4,9 +4,7 @@ import React, { useRef, useState } from "react";
 import PostUserAvatar from "./PostUserAvatar";
 import FilesIcon from "./ui/FilesIcon";
 import Button from "./ui/Button";
-import useDebounce from "@/hook/useDebounce";
 import Image from "next/image";
-import { FaClosedCaptioning } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import GirdSpinner from "./ui/GirdSpinner";
 
