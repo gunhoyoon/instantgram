@@ -8,7 +8,6 @@ import LoginContext from "@/context/LoginContext";
 import DataContext from "@/context/DataContext";
 import StoreContext from "@/context/StoreContext";
 
-// import { useState } from "react";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 

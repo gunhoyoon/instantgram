@@ -10,7 +10,6 @@ import NewFillIcon from "./ui/icons/NewFillIcon";
 import HomeFillIcon from "./ui/icons/HomeFillIcon";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Avatar from "./Avatar";
-import Login from "./ui/icons/Login";
 export default function Header() {
   // const [path, setPath] = useState(window.location.pathname);
   const pathname = usePathname();
@@ -31,34 +30,31 @@ export default function Header() {
       href: "/",
       icon: <HomeIcon />,
       clickedIcon: <HomeFillIcon />,
+      title: "Home",
     },
     {
       href: "/search",
       icon: <SearchIcon />,
       clickedIcon: <SearchFillIcon />,
+      title: "Search users",
     },
     {
       href: "/new",
       icon: <NewIcon />,
       clickedIcon: <NewFillIcon />,
+      title: "New post",
     },
-    // {
-    //   href: "/main3",
-    //   icon: <Login />,
-    // },
   ];
   return (
     <div className="flex justify-between items-center px-6">
-      <Link href={"/"}>
+      <Link href={"/"} aria-label="Home">
         <h1 className="text-3xl font-bold">Instantgram</h1>
       </Link>
       <nav>
         <ul className="flex gap-4 items-center p-4 ">
-          {menu.map((item) => (
-            <li key={item.href}>
-              <Link href={item.href}>
-                {pathname === item.href ? item.clickedIcon : item.icon}
-              </Link>
+          {menu.map(({ href, clickedIcon, title, icon }) => (
+            <li key={href} aria-label={title}>
+              <Link href={href}>{pathname === href ? clickedIcon : icon}</Link>
             </li>
           ))}
           {user && (
