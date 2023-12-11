@@ -18,13 +18,13 @@ async function addComment(id: string, comment: string) {
     body: JSON.stringify({ id, comment }),
   }).then((res) => res.json());
 }
+// console.log(cacheKeys.postsKeys, "cacheKey");
+// 해당 훅을 사용할 때 cacheKey 라는 스트링 타입의 경로를 받을 것. 아무것도 넘겨주지 않을 경우에 기본 값은 "/api/posts"
+// 여기서 user/username/query를 캐시키로 사용하게 되면 posts 커스텀 훅에서 제공해주는 posts 를 사용할거고,
+// user/username/query 해당 캐시키를 사용하는 데이터가 업데이트가 될 것임
 
 export default function usePosts() {
   const cacheKeys = useCacheKeys();
-  console.log(cacheKeys.postsKeys, "cacheKey");
-  // 해당 훅을 사용할 때 cacheKey 라는 스트링 타입의 경로를 받을 것. 아무것도 넘겨주지 않을 경우에 기본 값은 "/api/posts"
-  // 여기서 user/username/query를 캐시키로 사용하게 되면 posts 커스텀 훅에서 제공해주는 posts 를 사용할거고,
-  // user/username/query 해당 캐시키를 사용하는 데이터가 업데이트가 될 것임
   const {
     data: posts,
     isLoading,
